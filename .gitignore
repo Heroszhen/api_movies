@@ -24,7 +24,7 @@
 ###< lexik/jwt-authentication-bundle ###
 
 /public/files/
-public/files/.gitkeep
+!/public/files/.gitkeep
 
 
 ###> symfony/asset-mapper ###
