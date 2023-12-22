@@ -354,6 +354,9 @@
             "./config/packages/messenger.yaml"
         ]
     },
+    "symfonycasts/sass-bundle": {
+        "version": "v0.4.0"
+    },
     "twig/extra-bundle": {
         "version": "v3.8.0"
     },

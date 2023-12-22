@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f1ecaf5136e9cfc848e33cdbc3b4fe8e",
+    "content-hash": "135ace2f81984951356bf4829cbb51bf",
     "packages": [
         {
             "name": "api-platform/core",
@@ -8541,6 +8541,61 @@
                 }
             ],
             "time": "2023-11-06T11:00:25+00:00"
+        },
+        {
+            "name": "symfonycasts/sass-bundle",
+            "version": "v0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/SymfonyCasts/sass-bundle.git",
+                "reference": "5b831bfbc4eaa8ab3374729696b9087490a90835"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/SymfonyCasts/sass-bundle/zipball/5b831bfbc4eaa8ab3374729696b9087490a90835",
+                "reference": "5b831bfbc4eaa8ab3374729696b9087490a90835",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.1",
+                "symfony/asset-mapper": "^6.3|^7.0",
+                "symfony/console": "^5.4|^6.3|^7.0",
+                "symfony/http-client": "^5.4|^6.3|^7.0",
+                "symfony/process": "^5.4|^6.3|^7.0"
+            },
+            "require-dev": {
+                "matthiasnoback/symfony-config-test": "^5.0",
+                "phpstan/phpstan-symfony": "^1.4",
+                "symfony/filesystem": "^6.3|^7.0",
+                "symfony/framework-bundle": "^6.3|^7.0",
+                "symfony/phpunit-bridge": "^6.3|^7.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Symfonycasts\\SassBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Mathéo Daninos",
+                    "homepage": "https://github.com/WebMamba"
+                }
+            ],
+            "description": "Delightful Sass Support for Symfony + AssetMapper",
+            "keywords": [
+                "asset-mapper",
+                "sass"
+            ],
+            "support": {
+                "issues": "https://github.com/SymfonyCasts/sass-bundle/issues",
+                "source": "https://github.com/SymfonyCasts/sass-bundle/tree/v0.4.0"
+            },
+            "time": "2023-12-21T16:27:08+00:00"
         },
         {
             "name": "twig/extra-bundle",
