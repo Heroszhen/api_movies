@@ -7,5 +7,6 @@
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
 
+import 'bootstrap/dist/css/bootstrap.min.css';
 import $ from 'jquery';
 $('.example-wrapper h1').text("ooooooo");
