@@ -97,3 +97,32 @@
   }
 }
 /*>login*/
+
+/*<admin*/
+$mainColor:#4650dd;
+$color2:#7e85e7;
+$boxShadow:0 0.5rem 1rem rgba(0,0,0,.15);
+$h1:2.25rem;
+
+#admin-nav {
+  box-shadow: $boxShadow !important;
+  .right-part {
+    .dropdown-menu[data-bs-popper] {
+      left:-80px;
+    }
+  }
+}
+
+.admin-section{
+  background-color: #f8f9fa !important;
+  min-height:100vh;
+  padding:3rem;
+  padding-top: calc(56px + 3rem);
+  margin-bottom:3rem;
+}
+
+.admin-title {
+  text-transform: uppercase;
+  letter-spacing: .2em;
+  font-size:$h1;
+}

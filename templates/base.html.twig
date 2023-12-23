@@ -14,9 +14,11 @@
         {% endblock %}
     </head>
     <body>
+        {% if app.user is not null %}
+            {% include "admin/common/nav.html.twig" %}
+        {% endif %}   
         <main>
             {% block body %}{% endblock %}
         </main>
-       
     </body>
 </html>
