@@ -45,7 +45,7 @@ class Movie
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[ApiProperty(identifier: true)]
-    #[Groups(['movie:o'])]
+    #[Groups(['movie:o', 'movie_video:io'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 100)]
@@ -73,10 +73,15 @@ class Movie
     #[Groups(['movie:io'])]
     private Collection $photos;
 
+    #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieVideo::class)]
+    #[Groups(['movie:io'])]
+    private Collection $videos;
+
     public function __construct()
     {
         $this->actors = new ArrayCollection();
         $this->photos = new ArrayCollection();
+        $this->videos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +185,36 @@ class Movie
             // set the owning side to null (unless already changed)
             if ($photo->getMovie() === $this) {
                 $photo->setMovie(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, MovieVideo>
+     */
+    public function getVideos(): Collection
+    {
+        return $this->videos;
+    }
+
+    public function addVideo(MovieVideo $video): static
+    {
+        if (!$this->videos->contains($video)) {
+            $this->videos->add($video);
+            $video->setMovie($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVideo(MovieVideo $video): static
+    {
+        if ($this->videos->removeElement($video)) {
+            // set the owning side to null (unless already changed)
+            if ($video->getMovie() === $this) {
+                $video->setMovie(null);
             }
         }
 
