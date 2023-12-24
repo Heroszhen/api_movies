@@ -14,7 +14,8 @@
         {% endblock %}
     </head>
     <body>
-        {% if app.user is not null %}
+        {% set route = app.request.get('_route') %}
+        {% if app.user is not null and 'admin' in route %}
             {% include "admin/common/nav.html.twig" %}
         {% endif %}   
         <main>

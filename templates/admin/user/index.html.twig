@@ -4,12 +4,82 @@
 
 {% block body %}
 <section class="admin-section" id="admin-users" x-data="admin_users">
-    <h1 class="admin-title">Comptes</h1>
+    <h1 class="admin-title">
+        Comptes
+        <i class="bi bi-plus-circle pointer" @click="switchModal(true, 1)"></i>
+    </h1>
     <div class="container-fluid">
         <div class="row">
-            
+            <section class="col-12">
+                <table class="table table-hover">
+                    <thead class="table-primary">
+                        <tr>
+                            <th scope="col">Id</th>
+                            <th scope="col">Nom, Prénom</th>
+                            <th scope="col">Mail</th>
+                            <th scope="col">Rôles</th>
+                            <th scope="col">Créé</th>
+                            <th scope="col">Modifé</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <template x-for="(item, index) in allUsers">
+                            <tr>
+                                <th data-th="Id: " scope="row" x-text="item['id']"></th>
+                                <td data-th="Nom et Prénom: " x-text="item['lastname'] + ' ' + item['firstname']"></td>
+                                <td data-th="Mail: " x-text="item['email']"></td>
+                                <td data-th="Rôles: ">
+                                    <template x-for="(role, index2) in item['roles']">
+                                        <span x-text="role + ' '"></span>
+                                    </template>
+                                </td>
+                                <td data-th="Créé: " x-text="item['created']"></td>
+                                <td data-th="Modifié: " x-text="item['updated']"></td>
+                                <td data-th="Actions: ">
+                                    <button type="button" class="btn btn-info me-2 mb-2 text-white">
+                                        <i class="bi bi-pencil-fill"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-danger mb-2">
+                                        <i class="bi bi-key-fill"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            <section>
         </div>
     </div>
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">
+            <template x-If="formType==1">
+                <span>Editer un utilisateur</span>
+            </template>
+            <template x-If="formType==2">
+                <span>Changer le mot de passe</span>
+            </template>
+        </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+            <template x-If="formType==1">
+                <form>
+                </form>
+            </template>
+            <template x-If="formType==2">
+                 <form>
+                </form>
+            </template>
+      </div>
+    </div>
+  </div>
+</div>
 </section>
 
 <script src="{{ asset('script/admin/users.js') }}" type="module" defer></script>
