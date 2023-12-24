@@ -7,13 +7,13 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 #[Route('/admin')]
-class HomeController extends AbstractController
+class UserController extends AbstractController
 {
-    #[Route('/accueil', name: 'admin_home')]
+    #[Route('/utilisateurs', name: 'admin_users')]
     public function index(): Response
     {
-        return $this->render('admin/home/index.html.twig', [
-           
+        return $this->render('admin/user/index.html.twig', [
+            'controller_name' => 'UserController',
         ]);
     }
 }

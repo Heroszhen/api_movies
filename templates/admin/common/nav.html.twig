@@ -1,11 +1,15 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary fixed-top ps-3 pe-3" id="admin-nav">
+<nav class="navbar navbar-expand-lg fixed-top ps-3 pe-3" id="admin-nav">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('admin_home') }}">Movies</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
         </button>
+        {% set route = app.request.get('_route') %}
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                <li class="nav-item">
+                    <a class="nav-link  {% if route == 'admin_home' %}active{% endif %}" href="{{ path('admin_home') }}" aria-current="page" href="#">Home</a>
+                </li>
                 <li class="nav-item dropdown">
                     {% set api_routes = [
                         'admin_actresses', 
@@ -13,7 +17,7 @@
                         'admin_movies',
                         'admin_users'
                     ] %}
-                    <a class="nav-link dropdown-toggle {% if app.request.get('_route') in api_routes %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle {% if route in api_routes %}active{% endif %}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         APIs
                     </a>
                     <ul class="dropdown-menu">
@@ -21,11 +25,8 @@
                         <li><a class="dropdown-item" href="#">Videos</a></li>
                         <li><a class="dropdown-item" href="#">Films</a></li>
                         <li><hr class="dropdown-divider"></li>
-                        <li><a class="dropdown-item" href="#">Comptes</a></li>
+                        <li><a class="dropdown-item {% if route == 'admin_users' %}active{% endif %}" href="{{ path('admin_users') }}">Comptes</a></li>
                     </ul>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
                 </li>
             </ul>
             <div class="d-flex right-part">
