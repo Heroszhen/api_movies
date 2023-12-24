@@ -18,6 +18,10 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
+    'admin_users' => [
+        'path' => './assets/script/admin/users.js',
+        'entrypoint' => true,
+    ],
     'jquery' => [
         'version' => '3.7.1',
     ],
@@ -30,5 +34,8 @@ return [
     ],
     'bootstrap' => [
         'version' => '5.3.2',
+    ],
+    'alpinejs' => [
+        'version' => '3.13.3',
     ],
 ];

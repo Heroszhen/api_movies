@@ -3,7 +3,7 @@
 {% block title %}admin - comptes{% endblock %}
 
 {% block body %}
-<section class="admin-section">
+<section class="admin-section" id="admin-users" x-data="admin_users">
     <h1 class="admin-title">Comptes</h1>
     <div class="container-fluid">
         <div class="row">
@@ -11,4 +11,6 @@
         </div>
     </div>
 </section>
-{% endblock %}
+
+<script src="{{ asset('script/admin/users.js') }}" type="module" defer></script>
+{% endblock %} 
