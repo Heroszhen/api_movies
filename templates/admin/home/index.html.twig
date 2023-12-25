@@ -11,4 +11,25 @@
         </div>
     </div>
 </section>
+
+<script>
+    const socket = new WebSocket("ws://localhost:8080");
+
+    socket.addEventListener("open", (event) => {
+        socket.send("open");
+    });
+
+    socket.addEventListener("close", (event) => {
+        console.log('close', event)
+    });
+
+    socket.addEventListener("error", (event) => {
+        console.log("WebSocket error: ", event);
+    });
+
+    // Listen for messages
+    socket.addEventListener("message", (event) => {
+        console.log("Message from server ", event.data);
+    });
+</script>
 {% endblock %}
