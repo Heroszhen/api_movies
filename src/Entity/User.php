@@ -12,6 +12,8 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
+use App\Controller\Api\ModifyUserPasswordAction;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Ramsey\Uuid\UuidInterface as Uuid;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
@@ -22,7 +24,20 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Get(
             security: "is_granted('ROLE_ADMIN')",
         ),
-        new GetCollection()
+        new GetCollection(),
+        new Patch(
+            name: 'Update',
+            description: 'Update user password',
+            security: "is_granted('ROLE_ADMIN') or object.id == user.id",
+            uriTemplate: '/users/{id}/password', 
+            controller: ModifyUserPasswordAction::class,
+            normalizationContext: ['groups' => ['user_password:o']],
+            denormalizationContext: ['groups' => ['user_password:i']],
+        ),
+        new Patch(
+            security: "is_granted('ROLE_ADMIN') or object.id == user.id",
+            denormalizationContext: ['groups' => ['user_password:io']],
+        )
     ],
     normalizationContext: ['groups' => ['user:io', 'user:o']],
     denormalizationContext: ['groups' => ['user:io', 'user:i']]
@@ -39,16 +54,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     #[Assert\Uuid]
     #[ApiProperty(identifier: true)]
-    #[Groups(['user:o'])]
+    #[Groups(['user:o', 'user_password:o'])]
     private ?Uuid $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(allowNull: false)]
-    #[Groups(['user:o'])]
+    #[Groups(['user:o', 'user_password:io'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['user:o'])]
+    #[Groups(['user:o', 'user_password:io'])]
     private array $roles = ["ROLE_USER"];
 
     /**
@@ -56,14 +71,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      */
     #[ORM\Column]
     #[Assert\NotBlank(allowNull: false)]
+    #[Assert\Length(min: 8)]
+    #[Groups(['user_password:i'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['user:o'])]
+    #[Groups(['user:o', 'user_password:io'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['user:o'])]
+    #[Groups(['user:o', 'user_password:io'])]
     private ?string $firstname = null;
 
     public function getId(): ?Uuid

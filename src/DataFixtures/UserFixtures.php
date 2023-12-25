@@ -10,7 +10,7 @@ use Faker\Factory;
 
 class UserFixtures extends Fixture
 {
-    public function __construct(private UserPasswordHasherInterface $passwordHasher)
+    public function __construct(private readonly UserPasswordHasherInterface $passwordHasher)
     {}
 
     public function load(ObjectManager $manager): void
