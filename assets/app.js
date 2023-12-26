@@ -7,7 +7,9 @@
 
 console.log('This log comes from assets/app.js - welcome to AssetMapper! 🎉')
 
+
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'toastr/build/toastr.min.css';
 import '@popperjs/core';
 import 'bootstrap';
 import $ from 'jquery';

@@ -17,7 +17,7 @@
                             <th scope="col">Id</th>
                             <th scope="col">Nom, Prénom</th>
                             <th scope="col">Mail</th>
-                            <th scope="col">Rôles</th>
+                            <th scope="col">Admin</th>
                             <th scope="col">Créé</th>
                             <th scope="col">Modifé</th>
                             <th scope="col">Actions</th>
@@ -29,18 +29,18 @@
                                 <th data-th="Id: " scope="row" x-text="item['id']"></th>
                                 <td data-th="Nom et Prénom: " x-text="item['lastname'] + ' ' + item['firstname']"></td>
                                 <td data-th="Mail: " x-text="item['email']"></td>
-                                <td data-th="Rôles: ">
-                                    <template x-for="(role, index2) in item['roles']">
-                                        <span x-text="role + ' '"></span>
-                                    </template>
+                                <td data-th="Admin: ">
+                                    <div class="form-check wrap-check-admin">
+                                        <input class="form-check-input" type="checkbox" value="" id="'admin' + index" :checked="item['roles'].includes('ROLE_ADMIN')" @change="switchAdmin($event, index)">
+                                    </div>
                                 </td>
                                 <td data-th="Créé: " x-text="item['created']"></td>
                                 <td data-th="Modifié: " x-text="item['updated']"></td>
                                 <td data-th="Actions: ">
-                                    <button type="button" class="btn btn-info me-2 mb-2 text-white">
+                                    <button type="button" class="btn btn-info me-2 mb-2 text-white" @click="switchModal(true, 1, index)">
                                         <i class="bi bi-pencil-fill"></i>
                                     </button>
-                                    <button type="button" class="btn btn-danger mb-2">
+                                    <button type="button" class="btn btn-danger mb-2" @click="switchModal(true, 2, index)">
                                         <i class="bi bi-key-fill"></i>
                                     </button>
                                 </td>
@@ -69,11 +69,67 @@
       </div>
       <div class="modal-body">
             <template x-If="formType==1">
-                <form>
+                <form x-on:submit.prevent="editUser()" x-ref="userform">
+                    <div class="mb-3">
+                        <label for="email" class="form-label">Mail</label>
+                        <input type="email" class="form-control" id="email" name="email" x-model="userM['email']">
+                        <template x-if="errors != void 0 && errors['email'] != undefined">
+                            <div class="alert alert-danger" x-text="errors['email'][0]"></div>
+                        </template>
+                    </div>
+                    <template x-If="elmIndex==null">
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Mot de passe</label>
+                            <input type="password" class="form-control" id="password" name="password" x-model="userM['password']"  autocomplete="off">
+                            <template x-if="errors != void 0 && errors['password'] != undefined">
+                                <div class="alert alert-danger" x-text="errors['password'][0]"></div>
+                            </template>
+                        </div>
+                    </template>
+                    <div class="mb-3">
+                        <label for="lastname" class="form-label">Nom</label>
+                        <input type="text" class="form-control" id="lastname" name="lastname" x-model="userM['lastname']">
+                        <template x-if="errors != void 0 && errors['lastname'] != undefined">
+                            <div class="alert alert-danger" x-text="errors['lastname'][0]"></div>
+                        </template>
+                    </div>
+                    <div class="mb-3">
+                        <label for="firstname" class="form-label">Prénom</label>
+                        <input type="text" class="form-control" id="firstname" name="firstname" x-model="userM['firstname']">
+                        <template x-if="errors != void 0 && errors['firstname'] != undefined">
+                            <div class="alert alert-danger" x-text="errors['firstname'][0]"></div>
+                        </template>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
                 </form>
             </template>
             <template x-If="formType==2">
-                 <form>
+                <form x-on:submit.prevent="editPassword()" x-ref="passwordform">
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="password" name="password" x-model="userM['password']"  autocomplete="off" x-ref="password_input">
+                            <button class="btn btn-outline-primary" type="button" id="button-addon1" @click="switchPasswordType($refs.password_input)"><i class="bi bi-eye-fill"></i></button>
+                        </div>
+                        <template x-if="errors != void 0 && errors['password'] != undefined">
+                            <div class="alert alert-danger" x-text="errors['password'][0]"></div>
+                        </template>
+                    </div>
+                    <div class="mb-3">
+                        <label for="confirmation" class="form-label">Confirmation</label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" id="confirmation" name="confirmation" autocomplete="off" x-ref="confirmation_input">
+                            <button class="btn btn-outline-primary" type="button" id="button-addon2" @click="switchPasswordType($refs.confirmation_input)"><i class="bi bi-eye-fill"></i></button>
+                        </div>
+                        <template x-if="errors != void 0 && errors['confirmation'] != undefined">
+                            <div class="alert alert-danger" x-text="errors['confirmation'][0]"></div>
+                        </template>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                    </div>
                 </form>
             </template>
       </div>

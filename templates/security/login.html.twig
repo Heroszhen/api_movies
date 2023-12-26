@@ -18,6 +18,10 @@
                     <i class="bi bi-key"></i>
                     <input type="password" name="password" id="password" placeholder="Mot de passe" autocomplete="current-password" required>
                 </div>
+                <div  class="form-field-checkbox">
+                    <input type="checkbox" name="_remember_me" checked>
+                    <div>Se souvenir de moi</div>
+                </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 {% if error %}
                     <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>

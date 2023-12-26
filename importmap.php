@@ -38,4 +38,14 @@ return [
     'alpinejs' => [
         'version' => '3.13.3',
     ],
+    'validate.js' => [
+        'version' => '0.13.1',
+    ],
+    'toastr' => [
+        'version' => '2.1.4',
+    ],
+    'toastr/build/toastr.min.css' => [
+        'version' => '2.1.4',
+        'type' => 'css',
+    ],
 ];

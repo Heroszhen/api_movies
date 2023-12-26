@@ -13,11 +13,12 @@ use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
 use ApiPlatform\Metadata\Patch;
-use App\Controller\Api\ModifyUserPasswordAction;
+use ApiPlatform\Metadata\Post;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Ramsey\Uuid\UuidInterface as Uuid;
 use Ramsey\Uuid\Doctrine\UuidGenerator;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use App\State\UserPasswordProcessor;
 
 #[ApiResource(
     operations: [
@@ -25,12 +26,16 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
             security: "is_granted('ROLE_ADMIN')",
         ),
         new GetCollection(),
+        new Post(
+            security: "is_granted('ROLE_ADMIN')",
+            processor: UserPasswordProcessor::class
+        ),
         new Patch(
             name: 'Update',
             description: 'Update user password',
             security: "is_granted('ROLE_ADMIN') or object.id == user.id",
-            uriTemplate: '/users/{id}/password', 
-            controller: ModifyUserPasswordAction::class,
+            uriTemplate: '/users/{id}/password',
+            processor: UserPasswordProcessor::class,
             normalizationContext: ['groups' => ['user_password:o']],
             denormalizationContext: ['groups' => ['user_password:i']],
         ),
@@ -59,11 +64,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 180, unique: true)]
     #[Assert\NotBlank(allowNull: false)]
-    #[Groups(['user:o', 'user_password:io'])]
+    #[Groups(['user:o', 'user_password:io', 'user:io'])]
     private ?string $email = null;
 
     #[ORM\Column]
-    #[Groups(['user:o', 'user_password:io'])]
+    #[Groups(['user:o', 'user_password:io', 'user:io'])]
     private array $roles = ["ROLE_USER"];
 
     /**
@@ -72,15 +77,15 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Assert\NotBlank(allowNull: false)]
     #[Assert\Length(min: 8)]
-    #[Groups(['user_password:i'])]
+    #[Groups(['user_password:i', 'user:i'])]
     private ?string $password = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['user:o', 'user_password:io'])]
+    #[Groups(['user:o', 'user_password:io', 'user:io'])]
     private ?string $lastname = null;
 
     #[ORM\Column(length: 50, nullable: true)]
-    #[Groups(['user:o', 'user_password:io'])]
+    #[Groups(['user:o', 'user_password:io', 'user:io'])]
     private ?string $firstname = null;
 
     public function getId(): ?Uuid

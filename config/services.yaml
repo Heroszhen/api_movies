@@ -24,3 +24,10 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\State\UserPasswordProcessor:
+        bind:
+            $persistProcessor: '@api_platform.doctrine.orm.state.persist_processor'
+        # Uncomment only if autoconfiguration is disabled
+        #arguments: ['@App\State\UserProcessor.inner']
+        #tags: [ 'api_platform.state_processor' ]
