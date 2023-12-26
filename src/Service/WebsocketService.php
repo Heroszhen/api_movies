@@ -19,17 +19,27 @@ class WebsocketService implements MessageComponentInterface
     {
         //  Stocker la nouvelle connexion pour envoyer des messages ultérieurement.
         $this->clients->attach($conn);
-
         echo "New connection! ({$conn->resourceId})\n";
+        $conn->send(json_encode([
+            'type' => 'id',
+            'data' => $conn->resourceId
+        ]));
     }
 
     public function onMessage(ConnectionInterface $from, $msg) 
     {
         foreach ($this->clients as $client) {
-            if ($from !== $client) {
+            //if ($from !== $client) {
                 // L'expéditeur n'est pas le destinataire, envoyez à chaque client connecté.
-                $client->send($msg);
-            }
+                $client->send(json_encode([
+                    'type' => 'message',
+                    'data' => [
+                        'clientId' => $from->resourceId,
+                        'message' => (string)$msg,
+                        'created' =>  (new \DateTime())->format("Y-m-d H:i:s")
+                    ]
+                ]));
+            //}
         }
     }
 

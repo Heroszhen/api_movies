@@ -13,4 +13,6 @@ import 'bootstrap';
 import $ from 'jquery';
 
 
-// $('h1').text("ooooooo");
+if ($('#admin-home').length >= 1) {
+    import('./script/socket.js'); 
+}

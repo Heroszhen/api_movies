@@ -82,7 +82,6 @@ class WebsocketServerCommand extends Command
             ),
             $port
         );
-
         $server->run();
 
         return Command::SUCCESS;

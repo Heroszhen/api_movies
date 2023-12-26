@@ -129,6 +129,39 @@ $h1:2.25rem;
   text-transform: uppercase;
   letter-spacing: .2em;
   font-size:$h1;
+  margin-bottom:2rem;
+}
+
+/*admin-home*/
+#admin-home {
+    position: relative;
+    height:calc(100vh - 6rem);
+    .wrap-chat {
+      height: calc(100vh - 240px);
+      overflow-y:auto;
+      padding:15px;
+      border:1px solid gray;
+      border-radius:10px;
+      .message{
+        padding-right:70%;
+        margin-bottom:20px;
+        .id{
+          font-size:20px;
+          font-weight: bold;
+        }
+        .created {
+          color:gray;
+          font-size:13px;
+        }
+        &.right{
+          padding-left:70%;
+          padding-right:0;
+        }
+      }
+    }
+    .wrap-form{
+      margin-top: 10px;
+    }
 }
 
 /*admin-users*/

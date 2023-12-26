@@ -3,33 +3,38 @@
 {% block title %}admin - accueil!{% endblock %}
 
 {% block body %}
-<section class="admin-section">
+<section class="admin-section" id="admin-home">
     <h1 class="admin-title">Bienvenue</h1>
     <div class="container-fluid">
-        <div class="row">
-            
+        <div class="row justify-content-center">
+            <div class="col-12 col-md-10 col-lg-8">
+                <section class="wrap-chat">
+                </section>
+            </div>
         </div>
     </div>
+
+    <section class="wrap-form">
+        <form class="container-fluid">
+            <div class='row justify-content-center'>
+                <div class="col-10 col-md-8 col-lg-7">
+                    <input type="text" class="form-control mb-1" name="input-message" id="input-message" placeholder="message" disabled>
+                </div>
+                <div class="col-2 col-md-2 col-lg-1 text-end">
+                    <div class="d-grid gap-2">
+                        <button type="button" class="btn btn-primary btn-sm" id="btn-message" disabled>Envoyer</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </section>
+
+    <template id="messageTemplate">
+        <article class="message">
+            <div class="id"></div>
+            <div class="created"></div>
+            <div class="content"></div>
+        </article>
+    </template>
 </section>
-
-<script>
-    const socket = new WebSocket("ws://localhost:8080");
-
-    socket.addEventListener("open", (event) => {
-        socket.send("open");
-    });
-
-    socket.addEventListener("close", (event) => {
-        console.log('close', event)
-    });
-
-    socket.addEventListener("error", (event) => {
-        console.log("WebSocket error: ", event);
-    });
-
-    // Listen for messages
-    socket.addEventListener("message", (event) => {
-        console.log("Message from server ", event.data);
-    });
-</script>
 {% endblock %}
