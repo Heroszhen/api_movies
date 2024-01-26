@@ -22,7 +22,7 @@ use ArrayObject;
 #[ApiResource(
     operations: [
         new Get(),
-        new GetCollection(),
+        new GetCollection( ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
             controller: CreateMovieMediaObjectAction::class,

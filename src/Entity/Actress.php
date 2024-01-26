@@ -29,7 +29,10 @@ use ArrayObject;
 #[ApiResource(
     operations: [
         new Get(),
-        new GetCollection(),
+        new GetCollection(
+            paginationEnabled: true,
+            paginationItemsPerPage: 20
+        ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
             controller: CreateActressAction::class, 

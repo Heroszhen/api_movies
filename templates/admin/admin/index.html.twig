@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin - actrices{% endblock %}
+
+{% block body %}
+<section class="admin-section" id="admin-actresses" x-data="admin_actresses">
+    <h1 class="admin-title">
+        Actrices
+        {# <i class="bi bi-plus-circle pointer" @click="switchModal(true, 1)"></i> #}
+    </h1>
+    <div class="container-fluid">
+    </div>
+</section>
+<script src="{{ asset('script/admin/actress.js') }}" type="module" defer></script>
+{% endblock %}

@@ -21,7 +21,7 @@
                         APIs
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#">Actrices</a></li>
+                        <li><a class="dropdown-item {% if route == 'admin_actresses' %}active{% endif %}" href="{{ path('admin_actresses') }}">Actrices</a></li>
                         <li><a class="dropdown-item" href="#">Videos</a></li>
                         <li><a class="dropdown-item" href="#">Films</a></li>
                         <li><hr class="dropdown-divider"></li>

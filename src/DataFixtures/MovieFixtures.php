@@ -14,7 +14,7 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager): void
     {
         $faker = Factory::create();
-        for($i = 0; $i < 20; $i++) {
+        for($i = 0; $i < 50; $i++) {
             $name = "";
             for($j = 0; $j < 5; $j++) {
                 $name .= $faker->word();
