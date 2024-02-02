@@ -218,3 +218,15 @@ $h1:2.25rem;
       }
    }
 }
+
+/*admin-actresses*/
+#admin-actresses {
+    .card {
+      transition: .5s;
+      cursor: pointer;
+      &:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+      }
+    }
+}
+

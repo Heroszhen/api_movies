@@ -48,4 +48,11 @@ return [
         'version' => '2.1.4',
         'type' => 'css',
     ],
+    'tui-pagination' => [
+        'version' => '3.4.1',
+    ],
+    'tui-pagination/dist/tui-pagination.min.css' => [
+        'version' => '3.4.1',
+        'type' => 'css',
+    ],
 ];

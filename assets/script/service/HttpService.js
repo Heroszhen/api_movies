@@ -1,3 +1,5 @@
+import env from '../env.js';
+
 const getHeaders = (token) => {
     return {
         'X-Requested-With': 'XMLHttpRequest',
@@ -112,4 +114,14 @@ async function fetchGet(url, token = "", headers = null, func = null)  {
     }
 }
 
-export {fetchGet, fetchPost, fetchPatch, fetchDelete};
+/**
+ * @returns {Promise<string|null>}
+ */
+async function getToken() {
+    let response = await fetchGet(`${env['basUrl']}/admin/get-token`);
+    if (response['status'] === 1)return response['data'];
+
+    return null;
+}
+
+export {fetchGet, fetchPost, fetchPatch, fetchDelete, getToken};

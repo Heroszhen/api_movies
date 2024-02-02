@@ -10,3 +10,8 @@ https://themes.getbootstrap.com/preview/?theme_id=93418
 ---websocket
 https://blog.jarode.fr/post/mise-en-place-dun-websocket-securise-wss-avec-symfony-partie-1
 http://socketo.me/docs/hello-world
+
+
+---tui-pagination
+php bin/console importmap:require tui-pagination
+php bin/console importmap:require tui-pagination/dist/tui-pagination.min.css

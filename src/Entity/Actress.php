@@ -18,10 +18,12 @@ use ApiPlatform\Metadata\ApiProperty;
 use ApiPlatform\Metadata\ApiResource;
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\GetCollection;
+use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Post;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\CreateActressAction;
+use App\Controller\Api\UpdateActressAction;
 use App\Entity\Movie;
 use ArrayObject;
 
@@ -31,7 +33,7 @@ use ArrayObject;
         new Get(),
         new GetCollection(
             paginationEnabled: true,
-            paginationItemsPerPage: 20
+            paginationItemsPerPage: 18
         ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
@@ -74,6 +76,10 @@ use ArrayObject;
                     ])
                 )
             )
+        ),
+        new Patch(
+            security: "is_granted('ROLE_ADMIN')",
+            validationContext: ['groups' => ['Default', 'actress:i']], 
         )
     ],
     normalizationContext: [
