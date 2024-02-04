@@ -23,7 +23,7 @@ use ApiPlatform\Metadata\Post;
 use Symfony\Component\Serializer\Annotation\Groups;
 use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\CreateActressAction;
-use App\Controller\Api\UpdateActressAction;
+use App\Controller\Api\UpdateActressPhotoAction;
 use App\Entity\Movie;
 use ArrayObject;
 
@@ -76,6 +76,13 @@ use ArrayObject;
                     ])
                 )
             )
+        ),
+        new Post(
+            security: "is_granted('ROLE_ADMIN')",
+            controller: UpdateActressPhotoAction::class,
+            uriTemplate: '/actresses/{id}/update-photo',
+            deserialize: false, 
+            validationContext: ['groups' => ['Default', 'actress:i']], 
         ),
         new Patch(
             security: "is_granted('ROLE_ADMIN')",
@@ -130,7 +137,7 @@ class Actress
         groups: ['Default']
     )]
     #[Groups(['actress:i'])]
-    #[Assert\NotNull(groups: ['actress:i'])]
+    // #[Assert\NotNull(groups: ['actress:i'])]
     private ?File $invoiceFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]

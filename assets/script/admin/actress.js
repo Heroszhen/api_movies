@@ -1,10 +1,12 @@
 import Alpine from 'alpinejs';
 import {fetchGet, fetchPost, fetchPatch, getToken} from '../service/Httpservice.js';
 import Pagination from 'tui-pagination';
-import { loader, resetDateToInputDate, readFile } from '../service/UtilService.js';
+import { loader, resetDateToInputDate, readFile, wait } from '../service/UtilService.js';
 import { Actress } from './models.js';
 import { Modal } from 'bootstrap';
 import validate from 'validate.js';
+import env from '../env.js';
+import toastr from 'toastr'
  
 window.Alpine = Alpine
 document.addEventListener('alpine:init', () => {
@@ -22,6 +24,7 @@ document.addEventListener('alpine:init', () => {
             this.modal = new Modal('#exampleModal', {
                 keyboard: false
             });
+            toastr.options = env.toastrOptions;
             await this.getActresses();
         },
         async getActresses() {
@@ -70,6 +73,7 @@ document.addEventListener('alpine:init', () => {
 
             this.actressM = new Actress();
             this.file = null;
+            this.filePath = null;
             if (key !== null) {
                 this.actressM.setData(this.allActresses[key]);
                 this.actressM['birthday'] = resetDateToInputDate(this.actressM['birthday']);
@@ -99,17 +103,32 @@ document.addEventListener('alpine:init', () => {
             this.checkForm(this.$refs.actressform);
             if(this.errors === undefined) {
                 loader(true);
-                let formDate = new FormData();
-                let token;
+                let formData = new FormData();
+                let response;
+                for(let index in this.actressM)formData.append(index, this.actressM[index]);
+                let token = await getToken();
                 if(this.elmIndex === null) {
                     if(this.file !== null)this.actressM.setPhoto(this.file);
-                    for (let index in this.actressM)formDate.append(index, this.actressM[index]);
-                    token = await getToken();
-                    let response = await fetchPost(`/api/actresses`, formDate, token, loader(false));
+                    response = await fetchPost(`/api/actresses`, formData, token, loader(false));
+                    this.switchModal(false);
+                    loader(false);
+                    if (response['id']) {
+                        this.allActresses.push(response);
+                        toastr.success('Ajouter un utilisateur', 'Enregistré');
+                    } else {
+                        toastr.error('Ajouter un utilisateur', 'Error');
+                    }
                 } else {
-
+                    response = await fetchPatch(`/api/actresses/${this.allActresses[this.elmIndex]['id']}`, this.actressM, token);
+                    if(this.file !== null) {
+                        formData.append('invoiceFile', this.file);
+                        response = await fetchPost(`/api/actresses/${this.allActresses[this.elmIndex]['id']}/update-photo`, formData, token);
+                    }
+                    this.allActresses[this.elmIndex] = response;
+                    this.switchModal(true, this.elmIndex);
+                    loader(false);
+                    toastr.success('Modifier un utilisateur', 'Enregistré');
                 }
-                loader(false);
             }
         }
     }))

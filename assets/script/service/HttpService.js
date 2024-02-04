@@ -73,15 +73,15 @@ async function fetchGet(url, token = "", headers = null, func = null)  {
  async function fetchPatch(url, data, token = '', headers = null, func = null) {
     try {
         let response, body;
-        let patchHeaders = getHeaders(token);
+        let patchHeaders = headers ?? getHeaders(token);
         patchHeaders['Content-type'] = "application/merge-patch+json";
         if (data instanceof FormData) {
-            body = data
+            throw new Error('Not FormDate in Patch');
         } else {
             body = JSON.stringify(data);
         }
         response = await fetch(url, {
-            headers: headers ?? patchHeaders,
+            headers: patchHeaders,
             method: 'PATCH',
             body: body
         });
