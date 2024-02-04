@@ -24,7 +24,7 @@ class ActressFixtures extends Fixture implements DependentFixtureInterface
         $fileToUpload = new UploadedFile($imageUrl, 'naruto.png', 'image/png', true);
 
         $faker = Factory::create();
-        for($i = 0; $i < 100; $i++) {
+        for($i = 0; $i < 10; $i++) {
             $actress = new Actress();
             $actress
                 ->setName($faker->name())

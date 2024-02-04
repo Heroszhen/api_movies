@@ -58,17 +58,17 @@
     <div class="modal-content">
       <div class="modal-header">
         <h1 class="modal-title fs-5" id="exampleModalLabel">
-            <template x-If="formType==1">
+            <template x-if="formType==1">
                 <span>Editer un utilisateur</span>
             </template>
-            <template x-If="formType==2">
+            <template x-if="formType==2">
                 <span>Changer le mot de passe</span>
             </template>
         </h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-            <template x-If="formType==1">
+            <template x-if="formType==1">
                 <form x-on:submit.prevent="editUser()" x-ref="userform">
                     <div class="mb-3">
                         <label for="email" class="form-label">Mail</label>
@@ -77,7 +77,7 @@
                             <div class="alert alert-danger" x-text="errors['email'][0]"></div>
                         </template>
                     </div>
-                    <template x-If="elmIndex==null">
+                    <template x-if="elmIndex==null">
                         <div class="mb-3">
                             <label for="password" class="form-label">Mot de passe</label>
                             <input type="password" class="form-control" id="password" name="password" x-model="userM['password']"  autocomplete="off">
@@ -105,7 +105,7 @@
                     </div>
                 </form>
             </template>
-            <template x-If="formType==2">
+            <template x-if="formType==2">
                 <form x-on:submit.prevent="editPassword()" x-ref="passwordform">
                     <div class="mb-3">
                         <label for="password" class="form-label">Mot de passe</label>

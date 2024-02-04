@@ -1,11 +1,12 @@
 import env from '../env.js';
 
-const getHeaders = (token) => {
-    return {
+const getHeaders = (token, isFormData = false) => {
+    let ob = {
         'X-Requested-With': 'XMLHttpRequest',
         'Authorization': `Bearer ${token}`,
-        'Content-type': 'application/ld+json'
-    }
+    };
+    if(!isFormData)ob['Content-type'] = 'application/ld+json';
+    return ob;
 };
 
 /**
@@ -48,7 +49,7 @@ async function fetchGet(url, token = "", headers = null, func = null)  {
             body = JSON.stringify(data);
         }
         response = await fetch(url, {
-            headers: headers ?? getHeaders(token),
+            headers: headers ?? getHeaders(token, data instanceof FormData),
             method: 'POST',
             body: body
         });
