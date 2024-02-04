@@ -15,3 +15,6 @@ http://socketo.me/docs/hello-world
 ---tui-pagination
 php bin/console importmap:require tui-pagination
 php bin/console importmap:require tui-pagination/dist/tui-pagination.min.css
+
+---minify
+npm install uglify-js -g
