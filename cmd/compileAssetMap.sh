@@ -1,7 +1,7 @@
 #! /bin/bash
 #compile assert
 
-php bin/console c:c
+# php bin/console c:c
 rm -rf public/assets
 # php bin/console sass:build
 php bin/console asset-map:compile

@@ -20,6 +20,7 @@ document.addEventListener('alpine:init', () => {
         errors: undefined,
         file:null,
         filePath:null,
+        keywords:"",
         async init() {
             this.modal = new Modal('#exampleModal', {
                 keyboard: false
@@ -130,6 +131,15 @@ document.addEventListener('alpine:init', () => {
                     toastr.success('Modifier un utilisateur', 'Enregistré');
                 }
             }
+        },
+        async searchByKeywords(e) {
+            if(e.keyCode === 13) {
+
+            }
+        },
+        async clearKeywords(e) {
+            this.pageItem = 1;
+            await this.getActresses();
         }
     }))
 })

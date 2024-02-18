@@ -18,4 +18,5 @@ return [
     Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle::class => ['dev' => true, 'test' => true],
     Vich\UploaderBundle\VichUploaderBundle::class => ['all' => true],
     Symfonycasts\SassBundle\SymfonycastsSassBundle::class => ['all' => true],
+    Doctrine\Bundle\MongoDBBundle\DoctrineMongoDBBundle::class => ['all' => true],
 ];

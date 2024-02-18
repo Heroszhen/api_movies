@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\ApiFilter;
 use App\Entity\Trait\TimerTrait;
 use App\Repository\ActressRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -25,6 +26,7 @@ use ApiPlatform\OpenApi\Model;
 use App\Controller\Api\CreateActressAction;
 use App\Controller\Api\UpdateActressPhotoAction;
 use App\Entity\Movie;
+use App\Filter\ActressFilter;
 use ArrayObject;
 
 #[Vich\Uploadable]
@@ -94,6 +96,7 @@ use ArrayObject;
     ],
     denormalizationContext: ['groups' => ['actress:io', 'actress:i']]
 )]
+#[ApiFilter(ActressFilter::class, properties:['name' => 'partial', 'country' => 'partial'])]
 #[ORM\Entity(repositoryClass: ActressRepository::class)]
 #[UniqueEntity('name')]
 class Actress
