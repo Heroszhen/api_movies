@@ -10,8 +10,15 @@
     </h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 mb-3">
-                <input type="search" class="form-control" name="search" id="search" x-model="keywords" placeholder="rechercher..." @keyup="searchByKeywords($event)" @search="clearKeywords($event)">
+            <div class="col-8 col-lg-9 mb-3">
+                <input type="search" class="form-control" name="search" id="search" x-model="keywords" placeholder="nom...." @keypress="searchByKeywords($event)" @search="clearKeywords($event)">
+            </div>
+            <div class="col-4 col-lg-3 mb-3">
+                <select class="form-select" @change="orderByBirthday=$event.target.value">
+                    <option value=''>Ordonné par</option>
+                    <option value="asc">Ordonné par date de naissance : croissant</option>
+                    <option value="desc">Ordonné par date de naissance : décroissant</option>
+                </select>
             </div>
             <template x-for="(item, index) in allActresses">
                 <div class="col-6 col-md-4 col-lg-2 mb-3">

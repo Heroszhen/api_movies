@@ -26,6 +26,9 @@ final class ActressFilter extends AbstractFilter
         $queryBuilder
             ->andWhere(sprintf('%s.%s LIKE :%s', $alias, $property, $property))
             ->setParameter($property, "%{$value}%");
+        if ('order' === $property) {dd($alias, $property, $value);
+            $queryBuilder->orderBy(sprintf('%s.%s', $alias, $property), $value);
+        }
     }
 
     public function getDescription(string $resourceClass): array

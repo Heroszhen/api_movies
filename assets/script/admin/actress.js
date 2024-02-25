@@ -21,6 +21,8 @@ document.addEventListener('alpine:init', () => {
         file:null,
         filePath:null,
         keywords:"",
+        orderByBirthday: '',
+        searchAction: null,
         async init() {
             this.modal = new Modal('#exampleModal', {
                 keyboard: false
@@ -31,7 +33,9 @@ document.addEventListener('alpine:init', () => {
         async getActresses() {
             loader();
             const token = await getToken();
-            let response = await fetchGet(`/api/actresses?page=${this.pageItem}`, token, null);
+            let query = `/api/actresses?page=${this.pageItem}`;
+            if (this.orderByBirthday !== '')query = `/api/actresses/birthday/${this.orderByBirthday}?page=${this.pageItem}`;
+            let response = await fetchGet(query, token);
             loader(false);
             if (response['hydra:member'] !== undefined) {
                 this.allActresses = response['hydra:member'];
@@ -133,13 +137,32 @@ document.addEventListener('alpine:init', () => {
             }
         },
         async searchByKeywords(e) {
+            this.searchAction = true;
             if(e.keyCode === 13) {
-
+                if (this.keywords === '') {
+                   //this.clearKeywords();
+                } else {
+                    loader(true);
+                    let token = await getToken();
+                    let query = `/api/actresses?page=${this.pageItem}&name=${this.keywords}`;
+                    if (this.orderByBirthday !== '')query = `/api/actresses/birthday/${this.orderByBirthday}?page=${this.pageItem}&name=${this.keywords}`;
+                    let response = await fetchGet(query, token);
+                    loader(false);
+                    if (response['hydra:member'] !== undefined) {
+                        this.allActresses = response['hydra:member'];
+                        this.totalItems = response['hydra:totalItems'];
+                        this.setPaginator();
+                    }
+                }
             }
+
+            this.searchAction = null;
         },
         async clearKeywords(e) {
-            this.pageItem = 1;
-            await this.getActresses();
+            if (this.searchAction === null) {
+                this.pageItem = 1;
+                await this.getActresses();
+            }
         }
     }))
 })

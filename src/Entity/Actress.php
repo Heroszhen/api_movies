@@ -34,8 +34,22 @@ use ArrayObject;
     operations: [
         new Get(),
         new GetCollection(
-            paginationEnabled: true,
+            paginationEnabled: true, 
             paginationItemsPerPage: 18
+        ),
+        new GetCollection(
+            paginationEnabled: true, 
+            paginationItemsPerPage: 18,
+            name: 'get_birthday_asc_custom', 
+            uriTemplate: '/actresses/birthday/asc', 
+            order: ['birthday' => 'ASC']
+        ),
+        new GetCollection(
+            paginationEnabled: true, 
+            paginationItemsPerPage: 18,
+            name: 'get_birthday_desc_custom', 
+            uriTemplate: '/actresses/birthday/desc', 
+            order: ['birthday' => 'DESC']
         ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
@@ -96,6 +110,7 @@ use ArrayObject;
     ],
     denormalizationContext: ['groups' => ['actress:io', 'actress:i']]
 )]
+// #[ApiResource(paginationEnabled: true, paginationItemsPerPage: 18, paginationMaximumItemsPerPage: 18)]
 #[ApiFilter(ActressFilter::class, properties:['name' => 'partial', 'country' => 'partial'])]
 #[ORM\Entity(repositoryClass: ActressRepository::class)]
 #[UniqueEntity('name')]
