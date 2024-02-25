@@ -10,10 +10,10 @@
     </h1>
     <div class="container-fluid">
         <div class="row">
-            <div class="col-8 col-lg-9 mb-3">
+            <div class="col-md-8 mb-3">
                 <input type="search" class="form-control" name="search" id="search" x-model="keywords" placeholder="nom...." @keypress="searchByKeywords($event)" @search="clearKeywords($event)">
             </div>
-            <div class="col-4 col-lg-3 mb-3">
+            <div class="col-md-4 mb-3">
                 <select class="form-select" @change="orderByBirthday=$event.target.value">
                     <option value=''>Ordonné par</option>
                     <option value="asc">Ordonné par date de naissance : croissant</option>
