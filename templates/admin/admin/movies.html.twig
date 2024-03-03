@@ -6,7 +6,7 @@
 <section class="admin-section" id="admin-movies" x-data="admin_movies">
     <h1 class="admin-title">
         Films
-        <i class="bi bi-plus-circle pointer" @click="switchModal(true)"></i>
+        <i class="bi bi-plus-circle pointer" @click="switchModal(1)"></i>
     </h1>
     <div class="container-fluid">
         <div class="row">
@@ -91,73 +91,49 @@
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
             <div class="modal-header">
-                {# <h1 class="modal-title fs-5" id="exampleModalLabel">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">
                     <template x-if="elmIndex==null">
-                        <span>Ajouter une actress</span>
+                        <span>Ajouter un film</span>
                     </template>
                     <template x-if="elmIndex != null">
-                        <span>Modifier une actress</span>
+                        <span>Modifier un film</span>
                     </template>
-                </h1> #}
+                </h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                {# <form x-on:submit.prevent="editActress()" x-ref="actressform" class="container-fluid">
-                    <div class="row">
-                        <div class="col-12 mb-3">
-                            <label for="name" class="form-label">Nom *</label>
-                            <input type="text" class="form-control" id="name" name="name" x-model="actressM['name']">
-                            <template x-if="errors != undefined && errors['name'] != undefined">
-                                <div class="alert alert-danger">
-                                    <template x-for="(item, index) in errors['name']">
-                                        <div x-text="item"></div>
-                                    </template>
-                                </div>
-                            </template>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="birthday" class="form-label">Date de naissance</label>
-                            <input type="date" class="form-control" id="birthday" name="birthday" x-model="actressM['birthday']">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="country" class="form-label">Pays</label>
-                            <input type="text" class="form-control" id="country" name="country" x-model="actressM['country']">
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label for="description" class="form-label">Description</label>
-                            <textarea class="form-control" id="description" name="description" x-model="actressM['description']"></textarea>
-                        </div>
-                        <div class="col-12 mb-2">
-                            <label for="formFile" class="form-label">Photo</label>
-                            <input class="form-control" type="file" id="formFile" @change="handleFile($event.target)">
-                        </div>
-                        <div class="col-12 mb-3">
-                            <div class="row">
-                                <div class="col-6 mb-3">
-                                    <div>Photo actuelle</div>
-                                    <template x-if="actressM['photoName'] != null">
-                                        <div>
-                                            <img :src="'/files/' + actressM['photoName']">
-                                        </div>
-                                    </template>
-                                </div>
-                                <div class="col-6 mb-3">
-                                    <div>Nouvelle Photo</div>
-                                    <template x-if="filePath != null">
-                                        <div>
-                                            <div class="text-danger text-decoration-underline pointer" @click="file=null;filePath=null">Supprimer</div>
-                                            <img :src="filePath">
-                                        </div>
-                                    </template>
-                                </div>
+                <template x-if="modalAction==1">
+                    <form x-on:submit.prevent="editMovie()" x-ref="movieform" class="container-fluid">
+                        <div class="row">
+                            <div class="col-12 mb-3">
+                                <label for="name" class="form-label">Nom *</label>
+                                <input type="text" class="form-control" id="name" name="name" x-model="movieM['name']">
+                                <template x-if="errors != undefined && errors['name'] != undefined">
+                                    <div class="alert alert-danger">
+                                        <template x-for="(item, index) in errors['name']">
+                                            <div x-text="item"></div>
+                                        </template>
+                                    </div>
+                                </template>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="released" class="form-label">Date de sortie</label>
+                                <input type="date" class="form-control" id="released" name="released" x-model="movieM['released']">
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="last" class="form-label">Durée</label>
+                                <input type="number" class="form-control" id="last" name="last" x-model="movieM['last']">
+                            </div>
+                            <div class="col-12 mb-3">
+                                <label for="description" class="form-label">Description</label>
+                                <textarea class="form-control" id="description" name="description" x-model="movieM['description']"></textarea>
+                            </div>
+                            <div class="col-12 mb-3 text-center">
+                                <button type="submit" class="btn btn-primary">Envoyer</button>
                             </div>
                         </div>
-                        <div class="col-12 mb-3 text-center">
-                            <button type="submit" class="btn btn-primary">Envoyer</button>
-                        </div>
-                    </div>
-                </form> #}
-            </div>
+                    </form>
+                </template>
             </div>
         </div>
     </div>

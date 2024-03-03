@@ -2,23 +2,25 @@ import Alpine from 'alpinejs';
 
 import {fetchGet, fetchPost, fetchPatch, getToken} from '../service/Httpservice.js';
 import Pagination from 'tui-pagination';
-import { loader, sortArray, readFile, wait } from '../service/UtilService.js';
+import { loader, sortArray, resetDateToInputDate, readFile, wait } from '../service/UtilService.js';
 import env from '../env.js';
 import toastr from 'toastr'
 import { Modal } from 'bootstrap';
 import { Movie } from './models.js';
+import validate from 'validate.js';
  
 window.Alpine = Alpine
 document.addEventListener('alpine:init', () => {
     Alpine.data('admin_movies', () => ({
         allMovies: [],
+        allActresses: [],
         elmIndex: null,
         pageItem: 1,
         totalItems: 0,
         movieM: new Movie(),
         modal:null,
         modalAction:null,
-        // errors: undefined,
+        errors: undefined,
         // file:null,
         // filePath:null,
         async init() {
@@ -26,18 +28,27 @@ document.addEventListener('alpine:init', () => {
                 keyboard: false
             });
             toastr.options = env.toastrOptions;
-            await this.getMovies();
+            this.getMovies();
+            this.getActresses()
         },
         async getMovies() {
             loader();
             const token = await getToken();
             let query = `/api/movies?page=${this.pageItem}`;
             let response = await fetchGet(query, token);
-            loader(false);console.log(response['hydra:member']);
+            loader(false);
             if (response['hydra:member'] !== undefined) {
                 this.allMovies = response['hydra:member'];
                 this.totalItems = response['hydra:totalItems'];
                 this.setPaginator();
+            }
+        },
+        async getActresses() {
+            const token = await getToken();
+            let query = '/api/actresses/list';
+            let response = await fetchGet(query, token);
+            if (response['hydra:member'] !== undefined) {
+                this.allActresses = response['hydra:member'];
             }
         },
         setPaginator() {
@@ -73,7 +84,31 @@ document.addEventListener('alpine:init', () => {
                 return;
             } 
 
+            if (action === 1) {
+                this.movieM = new Movie();
+                if (key !== null) {
+                    this.movieM.setData(this.allMovies[key]);
+                    this.movieM['released'] = resetDateToInputDate(this.movieM['released']);
+                }
+            }
+
             this.modal.show();
+        },
+        checkForm(form) {
+            let constraints = {
+                name: {
+                    presence: {
+                        allowEmpty: false,
+                        message: "Il faut un nom",
+                    },
+                },
+            };
+            this.errors =  validate(form, constraints);
+        },
+        editMovie() {
+            this.checkForm(this.$refs.actressform);
+            if (this.errors === undefined) {
+            }
         }
     }))
 })

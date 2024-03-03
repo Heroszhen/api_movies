@@ -51,6 +51,12 @@ use ArrayObject;
             uriTemplate: '/actresses/birthday/desc', 
             order: ['birthday' => 'DESC']
         ),
+        new GetCollection(
+            name: 'get_name_asc_list', 
+            uriTemplate: '/actresses/listddddd', 
+            order: ['name' => 'ASC'],
+            //normalizationContext: ['groups' => 'list:o']
+        ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
             controller: CreateActressAction::class, 
@@ -122,12 +128,12 @@ class Actress
     #[ORM\GeneratedValue]
     #[ORM\Column]
     #[ApiProperty(identifier: true)]
-    #[Groups(['actress:o', 'movie:o'])]
+    #[Groups(['actress:o', 'movie:o', 'list:0'])]
     private ?int $id = null;
 
     #[ORM\Column(length: 50)]
     #[Assert\NotBlank(allowNull: false)]
-    #[Groups(['actress:io', 'movie:o'])]
+    #[Groups(['actress:io', 'movie:o', 'list:0'])]
     private ?string $name = null;
 
     #[ORM\Column(length: 50, nullable: true)]
