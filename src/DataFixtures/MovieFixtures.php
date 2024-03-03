@@ -30,8 +30,10 @@ class MovieFixtures extends Fixture implements DependentFixtureInterface
                 ->setDescription($faker->paragraph(10))
                 ->setReleased($faker->dateTime())
             ;
-            for ($j = 1; $j < 5; $j++) {
-                $actress = $manager->find(Actress::class, $j);
+            $n = $faker->numberBetween(2, 5);
+            for ($j = 1; $j < $n; $j++) {
+                $id = $faker->numberBetween(1, 50);
+                $actress = $manager->find(Actress::class, $id);
                 $movie->addActor($actress);
             }
 

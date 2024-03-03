@@ -1,12 +1,15 @@
 #! /bin/bash
 #create fixtures
 
-php bin/console doctrine:database:drop --force
+root="`pwd`"
+rm -rf  "${root}/public/files"*
+
+rm -f "${root}/var/data/movies.db"
+touch "${root}/var/data/movies.db"
+
+# php bin/console doctrine:database:drop --force
 php bin/console doctrine:database:create
 php bin/console doctrine:schema:update --force
-
-root="`pwd`/public/files"
-rm -rf  "${root}/"*
 
 php bin/console doctrine:fixtures:load
 

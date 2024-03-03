@@ -14,4 +14,10 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/admin/index.html.twig');
     }
+
+    #[Route('/films', name: 'admin_movies')]
+    public function getAllMovies(): Response
+    {
+        return $this->render('admin/admin/movies.html.twig');
+    }
 }

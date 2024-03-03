@@ -1,0 +1,168 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin - movies{% endblock %}
+
+{% block body %}
+<section class="admin-section" id="admin-movies" x-data="admin_movies">
+    <h1 class="admin-title">
+        Films
+        <i class="bi bi-plus-circle pointer" @click="switchModal(true)"></i>
+    </h1>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 mb-3">
+               <table class="table table-hover table-striped">
+                <thead classs="table-dark">
+                    <tr>
+                        <th scope="col">
+                            <div class="wrap-order-table">
+                                <div>Id</div>
+                                <div>
+                                    <i class="bi bi-caret-up" @click="sortMovies('id', 'desc', 'number')"></i>
+                                    <i class="bi bi-caret-down" @click="sortMovies('id', 'asc', 'number')"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="wrap-order-table">
+                                <div>Nom</div>
+                                <div>
+                                    <i class="bi bi-caret-up" @click="sortMovies('name', 'desc', 'string')"></i>
+                                    <i class="bi bi-caret-down" @click="sortMovies('name', 'asc', 'string')"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">Actrices</th>
+                        <th scope="col">
+                            <div class="wrap-order-table">
+                                <div>Durée</div>
+                                <div>
+                                    <i class="bi bi-caret-up" @click="sortMovies('last', 'desc', 'number')"></i>
+                                    <i class="bi bi-caret-down" @click="sortMovies('last', 'asc', 'number')"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">
+                            <div class="wrap-order-table">
+                                <div>Sortie</div>
+                                <div>
+                                    <i class="bi bi-caret-up" @click="sortMovies('released', 'desc', 'date')"></i>
+                                    <i class="bi bi-caret-down" @click="sortMovies('released', 'asc', 'date')"></i>
+                                </div>
+                            </div>
+                        </th>
+                        <th scope="col">Photo</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                        <template x-for="(item, index) in allMovies">
+                            <tr>
+                                <th scope="row" x-text="item.id"></th>
+                                <td x-text="item.name"></td>
+                                <td>
+                                    <template x-for="(item2, index) in item.actors">
+                                        <div x-text="item2.name"></div>
+                                    </template>
+                                </td>
+                                <td x-text="item.last"></td>
+                                <td x-text="item.released"></td>
+                                <td>
+                                </td>
+                                <td>
+                                    <button type="button" class="btn btn-info mb-2 me-2" @click="switchModal(1, index)">Modifier</button>
+                                    <button type="button" class="btn btn-danger mb-2 me-2">Supprimer</button>
+                                    <button type="button" class="btn btn-dark mb-2 me-2">Photos</button>
+                                </td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+
+                <div class="col-12 mt-5">
+                    <div id="tui-pagination-container" class="tui-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" data-bs-backdrop="static" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+            <div class="modal-header">
+                {# <h1 class="modal-title fs-5" id="exampleModalLabel">
+                    <template x-if="elmIndex==null">
+                        <span>Ajouter une actress</span>
+                    </template>
+                    <template x-if="elmIndex != null">
+                        <span>Modifier une actress</span>
+                    </template>
+                </h1> #}
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                {# <form x-on:submit.prevent="editActress()" x-ref="actressform" class="container-fluid">
+                    <div class="row">
+                        <div class="col-12 mb-3">
+                            <label for="name" class="form-label">Nom *</label>
+                            <input type="text" class="form-control" id="name" name="name" x-model="actressM['name']">
+                            <template x-if="errors != undefined && errors['name'] != undefined">
+                                <div class="alert alert-danger">
+                                    <template x-for="(item, index) in errors['name']">
+                                        <div x-text="item"></div>
+                                    </template>
+                                </div>
+                            </template>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="birthday" class="form-label">Date de naissance</label>
+                            <input type="date" class="form-control" id="birthday" name="birthday" x-model="actressM['birthday']">
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="country" class="form-label">Pays</label>
+                            <input type="text" class="form-control" id="country" name="country" x-model="actressM['country']">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea class="form-control" id="description" name="description" x-model="actressM['description']"></textarea>
+                        </div>
+                        <div class="col-12 mb-2">
+                            <label for="formFile" class="form-label">Photo</label>
+                            <input class="form-control" type="file" id="formFile" @change="handleFile($event.target)">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <div class="row">
+                                <div class="col-6 mb-3">
+                                    <div>Photo actuelle</div>
+                                    <template x-if="actressM['photoName'] != null">
+                                        <div>
+                                            <img :src="'/files/' + actressM['photoName']">
+                                        </div>
+                                    </template>
+                                </div>
+                                <div class="col-6 mb-3">
+                                    <div>Nouvelle Photo</div>
+                                    <template x-if="filePath != null">
+                                        <div>
+                                            <div class="text-danger text-decoration-underline pointer" @click="file=null;filePath=null">Supprimer</div>
+                                            <img :src="filePath">
+                                        </div>
+                                    </template>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 mb-3 text-center">
+                            <button type="submit" class="btn btn-primary">Envoyer</button>
+                        </div>
+                    </div>
+                </form> #}
+            </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="{{ asset('script/admin/movie.js') }}" type="module"></script>
+{% endblock %}

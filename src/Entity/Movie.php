@@ -24,7 +24,8 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         new Get(),
         new GetCollection(
             paginationEnabled: true,
-            paginationItemsPerPage: 20
+            paginationItemsPerPage: 20,
+            order: ['name' => 'ASC']
         ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
@@ -38,6 +39,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
     ],
     denormalizationContext: ['groups' => ['movie:io', 'movie:i']]
 )]
+#[ApiResource(order: ['name' => 'ASC'])]
 #[ORM\Entity(repositoryClass: MovieRepository::class)]
 #[UniqueEntity('name')]
 class Movie

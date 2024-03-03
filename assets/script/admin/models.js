@@ -37,5 +37,13 @@ class Actress extends AbstractModel{
     }
 }
 
-export {User, Actress};
+class Movie extends AbstractModel {
+    name = null;
+    actors = [];
+    last = null;
+    description = null;
+    released = null;
+}
+
+export {User, Actress, Movie};
 export default User;

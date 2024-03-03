@@ -29,3 +29,30 @@ export function readFile(file) {
         reader.readAsDataURL(file);
     });
 }
+
+/**
+ * 
+ * @param {Array<Object>} tab 
+ * @param {string} field 
+ * @param {string} order ['asc' or 'desc']
+ * @param {string} type [string, number, date]
+ * 
+ * @returns {Array<Object>}
+ */
+export function sortArray(tab, field, order, type) {
+    tab.sort((current, next) => {
+        switch (type) {
+            case 'string':
+                if (order === 'desc') return current[field].toString().localeCompare(next[field].toString());
+                else return next[field].toString().localeCompare(current[field].toString());
+            case 'number':
+                if (order === 'desc') return parseFloat(current[field]) - parseFloat(next[field]);
+                else return parseFloat(next[field]) - parseFloat(current[field]);
+            case 'date':
+                if (order === 'desc') return new Date(current[field]).getTime() - new Date(next[field]).getTime();
+                else return new Date(next[field]).getTime() - new Date(current[field]).getTime();
+            default:
+          }
+    });
+    return tab;
+}
