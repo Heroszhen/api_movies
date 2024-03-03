@@ -3,6 +3,8 @@
 
 root="`pwd`"
 rm -rf  "${root}/public/files"*
+mkdir "${root}/public/files"
+touch "${root}/public/files/.gitkeep"
 
 rm -f "${root}/var/data/movies.db"
 touch "${root}/var/data/movies.db"
