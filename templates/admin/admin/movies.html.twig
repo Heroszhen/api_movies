@@ -119,10 +119,24 @@
                             <div class="col-md-6 mb-3">
                                 <label for="released" class="form-label">Date de sortie</label>
                                 <input type="date" class="form-control" id="released" name="released" x-model="movieM['released']">
+                                <template x-if="errors != undefined && errors['released'] != undefined">
+                                    <div class="alert alert-danger">
+                                        <template x-for="(item, index) in errors['released']">
+                                            <div x-text="item"></div>
+                                        </template>
+                                    </div>
+                                </template>
                             </div>
                             <div class="col-md-6 mb-3">
                                 <label for="last" class="form-label">Durée</label>
                                 <input type="number" class="form-control" id="last" name="last" x-model="movieM['last']">
+                                <template x-if="errors != undefined && errors['last'] != undefined">
+                                    <div class="alert alert-danger">
+                                        <template x-for="(item, index) in errors['last']">
+                                            <div x-text="item"></div>
+                                        </template>
+                                    </div>
+                                </template>
                             </div>
                             <div class="col-12 mb-3">
                                 <label for="description" class="form-label">Description</label>

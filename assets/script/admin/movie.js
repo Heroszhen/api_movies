@@ -45,7 +45,7 @@ document.addEventListener('alpine:init', () => {
         },
         async getActresses() {
             const token = await getToken();
-            let query = '/api/actresses/list';
+            let query = '/api/actresses/name/asc';
             let response = await fetchGet(query, token);
             if (response['hydra:member'] !== undefined) {
                 this.allActresses = response['hydra:member'];
@@ -102,11 +102,29 @@ document.addEventListener('alpine:init', () => {
                         message: "Il faut un nom",
                     },
                 },
+                released: {
+                    presence: {
+                        allowEmpty: false,
+                        message: "Il faut une date",
+                    },
+                },
+                last: {
+                    presence: {
+                        allowEmpty: false,
+                        message: "Il faut une durée",
+                    },
+                    numericality: {
+                        onlyInteger: true,
+                        greaterThan: 0,
+                        message: "La durée doit être supérieure à 0",
+                        notGreaterThan: "0",
+                    }
+                }
             };
             this.errors =  validate(form, constraints);
         },
         editMovie() {
-            this.checkForm(this.$refs.actressform);
+            this.checkForm(this.$refs.movieform);console.log(this.errors, this.movieM)
             if (this.errors === undefined) {
             }
         }

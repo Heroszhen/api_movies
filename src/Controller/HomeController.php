@@ -15,4 +15,10 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/jolies-filles', name: 'app_beautiful_girls')]
+    public function beautiful_girls(): Response
+    {
+        return $this->render('home/beautiful_girls.html.twig');
+    }
 }

@@ -31,6 +31,10 @@ use ArrayObject;
 
 #[Vich\Uploadable]
 #[ApiResource(
+    normalizationContext: [
+        'groups' => ['actress:io', 'actress:o']
+    ],
+    denormalizationContext: ['groups' => ['actress:io', 'actress:i']],
     operations: [
         new Get(),
         new GetCollection(
@@ -52,10 +56,11 @@ use ArrayObject;
             order: ['birthday' => 'DESC']
         ),
         new GetCollection(
+            paginationEnabled: false,
             name: 'get_name_asc_list', 
-            uriTemplate: '/actresses/listddddd', 
+            uriTemplate: '/actresses/name/asc', 
             order: ['name' => 'ASC'],
-            //normalizationContext: ['groups' => 'list:o']
+            normalizationContext: ['groups' => ['list:0']]
         ),
         new Post(
             security: "is_granted('ROLE_ADMIN')",
@@ -110,11 +115,7 @@ use ArrayObject;
             security: "is_granted('ROLE_ADMIN')",
             validationContext: ['groups' => ['Default', 'actress:i']], 
         )
-    ],
-    normalizationContext: [
-        'groups' => ['actress:io', 'actress:o']
-    ],
-    denormalizationContext: ['groups' => ['actress:io', 'actress:i']]
+    ]
 )]
 // #[ApiResource(paginationEnabled: true, paginationItemsPerPage: 18, paginationMaximumItemsPerPage: 18)]
 #[ApiFilter(ActressFilter::class, properties:['name' => 'partial', 'country' => 'partial'])]
