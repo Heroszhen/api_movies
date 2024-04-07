@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Vive le codage!{% endblock %}
+
+{% block body %}
+
+<section id="test-users">
+    <h2 class="text-center">Random Users(<a href="https://randomuser.me/" target='_blank'>https://randomuser.me/<a/>)</h2>
+    <section id="girls"></section>
+</section>
+
+{% block importmap %}
+    {# do NOT call parent() #}
+    {{ importmap(['app', 'test_users']) }}
+{% endblock %}
+
+{% endblock %}

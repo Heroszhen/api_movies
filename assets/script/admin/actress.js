@@ -70,6 +70,7 @@ document.addEventListener('alpine:init', () => {
         },
         switchModal(toOpen, key = null) {
             this.elmIndex = key;
+            this.errors = undefined;
 
             if (toOpen === false) {
                 this.modal.hide();

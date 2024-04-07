@@ -1,0 +1,16 @@
+#test-users {
+    color: red;
+}
+
+#girls {
+    padding: 10px 50px;
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 800px;
+    overflow-y: auto;
+    >.girl {
+        width:calc(100% / 7);
+        margin-bottom: 20px;
+        padding: 5px;
+    }
+}

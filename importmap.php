@@ -22,6 +22,10 @@ return [
         'path' => './assets/script/admin/users.js',
         'entrypoint' => true,
     ],
+    'test_users' => [
+        'path' => './assets/script/test/users.js',
+        'entrypoint' => true,
+    ],
     'jquery' => [
         'version' => '3.7.1',
     ],

@@ -16,10 +16,14 @@ class TestController extends AbstractController
     #[Route('/password', name: 'app_password')]
     public function index(): Response
     {
-        
-
         return $this->render('test/index.html.twig', [
             'controller_name' => 'TestController',
         ]);
+    }
+
+    #[Route('/users', name: 'test_users_jquery')]
+    public function beautiful_girls(): Response
+    {
+        return $this->render('test/users.html.twig');
     }
 }
