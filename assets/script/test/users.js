@@ -25,3 +25,32 @@ $('#girls').on('scroll', function(){
     }
 });
 
+$('#girls').on('click', 'img', function(){
+    $('#big-img').remove();
+    const parent = $(this).parent();
+    const clientReact = $(this)[0].getBoundingClientRect();
+    let newImg = $(`<img src='${$(this).attr('src')}' alt='' class='position-absolute' id='big-img'>`).css({
+        'width': `${$(this).width()}px`,
+        'height': `${$(this).height()}px`,
+        'top': clientReact.top,
+        'left': clientReact.left
+    });
+    parent.append(newImg);
+    newImg.animate(
+        {
+            top: $('body').height() - window.innerHeight / 2  -  newImg.height() / 2,
+            left: (window.innerWidth - newImg.width()) / 2
+        },
+        1000,
+        function() {
+            const newWidth = 700;
+            const newHeight = newWidth / $(this).width() * $(this).height();
+            $(this).animate({
+                'width': `${newWidth}px`,
+                'height': `${newHeight}px`,
+                top: $('body').height() - window.innerHeight / 2  -  newWidth / 2,
+                left: (window.innerWidth - newHeight) / 2
+            }, 1000);
+        }
+    );
+});
