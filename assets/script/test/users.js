@@ -36,6 +36,7 @@ $('#girls').on('click', 'img', function(){
         'left': clientReact.left
     });
     parent.append(newImg);
+    
     newImg.animate(
         {
             top: $('body').height() - window.innerHeight / 2  -  newImg.height() / 2,
