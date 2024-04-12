@@ -18,3 +18,5 @@ php bin/console importmap:require tui-pagination/dist/tui-pagination.min.css
 
 ---minify
 npm install uglify-js -g
+
+php bin/console sass:build --watch

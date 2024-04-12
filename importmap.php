@@ -59,4 +59,7 @@ return [
         'version' => '3.4.1',
         'type' => 'css',
     ],
+    'lodash' => [
+        'version' => '4.17.21',
+    ],
 ];

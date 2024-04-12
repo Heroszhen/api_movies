@@ -8,6 +8,7 @@ import toastr from 'toastr'
 import { Modal } from 'bootstrap';
 import { Movie } from './models.js';
 import validate from 'validate.js';
+import clone from 'lodash';
  
 window.Alpine = Alpine
 document.addEventListener('alpine:init', () => {
@@ -94,6 +95,14 @@ document.addEventListener('alpine:init', () => {
 
             this.modal.show();
         },
+        switchActor(e, id) {
+            if (e.target.checked === true) {
+                this.movieM['actors'].push(id);
+            } else {
+                let index = this.movieM['actors'].indexOf(id);
+                this.movieM['actors'].splice(index, 1);
+            }
+        },
         checkForm(form) {
             let constraints = {
                 name: {
@@ -123,9 +132,26 @@ document.addEventListener('alpine:init', () => {
             };
             this.errors =  validate(form, constraints);
         },
-        editMovie() {
-            this.checkForm(this.$refs.movieform);console.log(this.errors, this.movieM)
+        async editMovie() {
+            this.checkForm(this.$refs.movieform);
             if (this.errors === undefined) {
+                let movie = {...this.movieM}
+                movie['actors'] = [];
+                movie['last'] = parseInt(movie['last']);console.log(this.movieM, movie)
+                this.movieM["actors"].forEach(id => movie['actors'].push('/api/actresses/' + id));
+
+                let response;
+                const token = await getToken();
+                if (this.elmIndex === null) {
+                    response = await fetchPost(`/api/movies`, movie, token);
+                    if (response['id'] !== undefined) {
+                        this.allMovies.unshift(response);
+                        toastr.success('Ajouter un movie', 'Enregistré');
+                        this.switchModal(null);
+                    }
+                } else {
+
+                }
             }
         }
     }))

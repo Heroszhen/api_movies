@@ -43,6 +43,12 @@ class Movie extends AbstractModel {
     last = null;
     description = null;
     released = null;
+
+    setData(data) {
+        super.setData(data);
+        this.actors = [];
+        data.actors.forEach(actor => this.actors.push(actor.id));
+    }
 }
 
 export {User, Actress, Movie};

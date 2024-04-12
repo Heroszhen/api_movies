@@ -250,3 +250,17 @@ $h1:2.25rem;
     }
   }
 }
+
+
+/*admin-actresses*/
+#admin-movies {
+  .modal {
+     #list-actors {
+        padding: .375rem .75rem;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        max-height: 100px;
+        overflow-y: auto;
+     }
+  }
+}
