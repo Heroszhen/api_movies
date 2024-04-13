@@ -1,14 +1,13 @@
 import Alpine from 'alpinejs';
 
-import {fetchGet, fetchPost, fetchPatch, getToken} from '../service/Httpservice.js';
+import {fetchGet, getToken} from '../service/Httpservice.js';
 import Pagination from 'tui-pagination';
-import { loader, sortArray, resetDateToInputDate, readFile, wait } from '../service/UtilService.js';
-import env from '../env.js';
-import toastr from 'toastr'
+import { sortArray, resetDateToInputDate } from '../service/UtilService.js';
 import { Modal } from 'bootstrap';
 import { Movie } from './models.js';
 import validate from 'validate.js';
-import clone from 'lodash';
+import {store} from '../store/store.js';
+import { fetchGetMovies, sortMovies, fetchAddMovie, fetchUpdateMovie } from '../store/movie.slice.js';
  
 window.Alpine = Alpine
 document.addEventListener('alpine:init', () => {
@@ -28,21 +27,18 @@ document.addEventListener('alpine:init', () => {
             this.modal = new Modal('#exampleModal', {
                 keyboard: false
             });
-            toastr.options = env.toastrOptions;
+            
+            store.subscribe(()=>{
+                this.allMovies = store.getState().movieReducer.movies;
+                this.totalItems = store.getState().movieReducer.totalItems;
+                this.setPaginator();
+            })
+
             this.getMovies();
             this.getActresses()
         },
         async getMovies() {
-            loader();
-            const token = await getToken();
-            let query = `/api/movies?page=${this.pageItem}`;
-            let response = await fetchGet(query, token);
-            loader(false);
-            if (response['hydra:member'] !== undefined) {
-                this.allMovies = response['hydra:member'];
-                this.totalItems = response['hydra:totalItems'];
-                this.setPaginator();
-            }
+            store.dispatch(fetchGetMovies({pageItem: this.pageItem}));
         },
         async getActresses() {
             const token = await getToken();
@@ -75,7 +71,8 @@ document.addEventListener('alpine:init', () => {
             });
         },
         sortMovies(field, order, type) {
-            this.allMovies = sortArray(this.allMovies, field, order, type);
+            store.dispatch(sortMovies({movies: this.allMovies, field:field, order:order, type:type}))
+            //this.allMovies = sortArray(this.allMovies, field, order, type);
         },
         switchModal(action, key = null) {
             this.elmIndex = key;
@@ -137,20 +134,13 @@ document.addEventListener('alpine:init', () => {
             if (this.errors === undefined) {
                 let movie = {...this.movieM}
                 movie['actors'] = [];
-                movie['last'] = parseInt(movie['last']);console.log(this.movieM, movie)
+                movie['last'] = parseInt(movie['last']);
                 this.movieM["actors"].forEach(id => movie['actors'].push('/api/actresses/' + id));
 
-                let response;
-                const token = await getToken();
                 if (this.elmIndex === null) {
-                    response = await fetchPost(`/api/movies`, movie, token);
-                    if (response['id'] !== undefined) {
-                        this.allMovies.unshift(response);
-                        toastr.success('Ajouter un movie', 'Enregistré');
-                        this.switchModal(null);
-                    }
+                    store.dispatch(fetchAddMovie({movie: movie}));
                 } else {
-
+                    store.dispatch(fetchUpdateMovie({movie: movie, index: this.elmIndex}));
                 }
             }
         }

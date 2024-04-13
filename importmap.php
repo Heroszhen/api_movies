@@ -22,6 +22,10 @@ return [
         'path' => './assets/script/admin/users.js',
         'entrypoint' => true,
     ],
+    'admin_movies' => [
+        'path' => './assets/script/admin/movie.js',
+        'entrypoint' => true,
+    ],
     'test_users' => [
         'path' => './assets/script/test/users.js',
         'entrypoint' => true,
@@ -61,5 +65,20 @@ return [
     ],
     'lodash' => [
         'version' => '4.17.21',
+    ],
+    '@reduxjs/toolkit' => [
+        'version' => '2.2.3',
+    ],
+    'redux' => [
+        'version' => '5.0.1',
+    ],
+    'immer' => [
+        'version' => '10.0.4',
+    ],
+    'reselect' => [
+        'version' => '5.1.0',
+    ],
+    'redux-thunk' => [
+        'version' => '3.1.0',
     ],
 ];

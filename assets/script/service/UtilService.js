@@ -40,7 +40,8 @@ export function readFile(file) {
  * @returns {Array<Object>}
  */
 export function sortArray(tab, field, order, type) {
-    tab.sort((current, next) => {
+    let newTab = JSON.parse(JSON.stringify(tab));
+    newTab.sort((current, next) => {
         switch (type) {
             case 'string':
                 if (order === 'desc') return current[field].toString().localeCompare(next[field].toString());
@@ -54,5 +55,6 @@ export function sortArray(tab, field, order, type) {
             default:
           }
     });
-    return tab;
+
+    return newTab;
 }
