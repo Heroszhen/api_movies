@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import {getToken, fetchGet, fetchPost, fetchPatch} from '../service/Httpservice.js';
+import {getToken, fetchGet, fetchPost, fetchPatch, fetchDelete } from '../service/Httpservice.js';
 import { loader } from '../service/UtilService.js';
 import { sortArray } from "../service/UtilService.js";
 import env from '../env.js';
@@ -7,11 +7,9 @@ import toastr from 'toastr'
 toastr.options = env.toastrOptions;
 
 export const fetchGetMovies = createAsyncThunk("movie/getMovies", async (payload) => {
-    loader();
     const token = await getToken();
-    let query = `/api/movies?page=${payload.pageItem}`;
+    let query = `/api/movies5?page=${payload.pageItem}`;
     let response = await fetchGet(query, token);
-    loader(false);
 
     return response;
 });
@@ -37,6 +35,15 @@ export const fetchUpdateMovie = createAsyncThunk("movie/updateMovie", async (pay
     };
 });
 
+export const fetchDeleteMovie = createAsyncThunk("movie/deleteMovie", async (payload) => {
+    loader();
+    const token = await getToken();
+    await fetchDelete(`/api/movies/${payload.id}`, token);
+    loader(false);
+
+    return {index: payload.index};
+});
+
 const {actions, reducer:movieReducer } = createSlice({
     name: "movie",
     initialState: {
@@ -50,9 +57,18 @@ const {actions, reducer:movieReducer } = createSlice({
     },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchGetMovies.pending, (state) => {
+                loader();
+            })
             .addCase(fetchGetMovies.fulfilled, (state, action) => {
                 state.movies = action.payload['hydra:member'];
                 state.totalItems = action.payload['hydra:totalItems'];
+                loader(false);
+                if (action.payload.status !== undefined && action.payload.status !== 200)toastr.error('Lister des films', 'Erreur');
+            })
+            .addCase(fetchGetMovies.rejected, (state, action) => {alert("ok")
+                loader(false);
+                toastr.error('Lister des films', 'Erreur');
             })
             .addCase(fetchAddMovie.fulfilled, (state, action) => {
                 state.movies.unshift(action.payload);
@@ -61,6 +77,10 @@ const {actions, reducer:movieReducer } = createSlice({
             .addCase(fetchUpdateMovie.fulfilled, (state, action) => {
                 state.movies[action.payload.index] = action.payload.movie;
                 toastr.success('Modifier un film', 'Enregistré');
+            })
+            .addCase(fetchDeleteMovie.fulfilled, (state, action) => {
+                state.movies.splice(action.payload.index, 1);
+                toastr.success('Supprimer un film', 'Enregistré');
             })
         ;
     }

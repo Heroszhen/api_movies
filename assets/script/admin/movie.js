@@ -7,7 +7,7 @@ import { Modal } from 'bootstrap';
 import { Movie } from './models.js';
 import validate from 'validate.js';
 import {store} from '../store/store.js';
-import { fetchGetMovies, sortMovies, fetchAddMovie, fetchUpdateMovie } from '../store/movie.slice.js';
+import { fetchGetMovies, sortMovies, fetchAddMovie, fetchUpdateMovie, fetchDeleteMovie } from '../store/movie.slice.js';
  
 window.Alpine = Alpine
 document.addEventListener('alpine:init', () => {
@@ -143,6 +143,9 @@ document.addEventListener('alpine:init', () => {
                     store.dispatch(fetchUpdateMovie({movie: movie, index: this.elmIndex}));
                 }
             }
+        },
+        deleteMovie(index) {
+            store.dispatch(fetchDeleteMovie({index: index, id: this.allMovies[index]["id"]}));
         }
     }))
 })

@@ -108,7 +108,7 @@ async function fetchGet(url, token = "", headers = null, func = null)  {
             method: 'DELETE'
         });
 
-        return await response.json();
+        return response;
     } catch (err) {
         func;
         throw new Error(err);
