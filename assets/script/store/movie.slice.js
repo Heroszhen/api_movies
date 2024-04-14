@@ -8,7 +8,7 @@ toastr.options = env.toastrOptions;
 
 export const fetchGetMovies = createAsyncThunk("movie/getMovies", async (payload) => {
     const token = await getToken();
-    let query = `/api/movies5?page=${payload.pageItem}`;
+    let query = `/api/movies?page=${payload.pageItem}`;
     let response = await fetchGet(query, token);
 
     return response;

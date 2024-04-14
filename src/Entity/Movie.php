@@ -36,6 +36,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
         ),
         new Delete(
             security: "is_granted('ROLE_ADMIN')",
+            write: true
         )
     ],
     normalizationContext: [
@@ -78,11 +79,11 @@ class Movie
     #[Groups(['movie:io'])]
     private ?\DateTimeInterface $released = null;
 
-    #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieMediaObject::class)]
+    #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieMediaObject::class, cascade: ['persist', 'remove'])]
     #[Groups(['movie:io'])]
     private Collection $photos;
 
-    #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieVideo::class)]
+    #[ORM\OneToMany(mappedBy: 'movie', targetEntity: MovieVideo::class, cascade: ['persist', 'remove'])]
     #[Groups(['movie:io'])]
     private Collection $videos;
 
