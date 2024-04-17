@@ -53,6 +53,10 @@ const {actions, reducer:movieReducer } = createSlice({
     reducers: {
         sortMovies(state, action) {
             state.movies = sortArray(action.payload.movies, action.payload.field, action.payload.order, action.payload.type);
+        }, 
+        deleteMoviePhoto(state, action) {
+            let payload = action.payload;
+            state.movies[payload.movieIndex]['photos'].splice(payload.photoIndex, 1);
         }
     },
     extraReducers: (builder) => {
@@ -86,5 +90,5 @@ const {actions, reducer:movieReducer } = createSlice({
     }
 });
 
-export const { sortMovies } = actions;
+export const { sortMovies, deleteMoviePhoto } = actions;
 export default movieReducer;

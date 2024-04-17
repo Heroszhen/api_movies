@@ -20,6 +20,11 @@ export function resetDateToInputDate(date) {
     return date;
 }
 
+/**
+ * 
+ * @param {File} file 
+ * @returns {Promise<string>}
+ */
 export function readFile(file) {
     return new Promise((resolve, err) => {
         let reader = new FileReader();

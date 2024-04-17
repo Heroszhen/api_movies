@@ -43,6 +43,8 @@ class Movie extends AbstractModel {
     last = null;
     description = null;
     released = null;
+    photos = [];
+    videos = [];
 
     setData(data) {
         super.setData(data);

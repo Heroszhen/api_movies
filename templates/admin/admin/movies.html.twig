@@ -153,6 +153,37 @@
                                     </template>
                                 </div>
                             </div>
+                            <div class="col-12 mb-3">
+                                <div class="mb-2">
+                                    <label for="formFile" class="form-label">Photos</label>
+                                    <input class="form-control" type="file" id="formFile" @change="handleInputFile($event)">
+                                </div>
+                                <div class="container-fluid">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <h5>Photos actuelles</h5>
+                                            <template x-for="(item, index) in movieM['photos']">
+                                                <div class="mb-1 new-photo" >
+                                                    <i class="bi bi-x-circle" @click="deletePhoto(index, false)"></i>
+                                                    <img :src="'/files/' + item.name" alt="">
+                                                </div>
+                                            </template>
+                                        </div>
+                                        <div class="col-6">
+                                            <h5>
+                                                Nouvelles photos
+                                                <i class="bi bi-arrow-up-circle pointer ms-1" @click="savePhotos()"></i>
+                                            </h5>
+                                            <template x-for="(item, index) in newPhotos">
+                                                <div class="mb-1 new-photo" >
+                                                    <i class="bi bi-x-circle" @click="deletePhoto(index)"></i>
+                                                    <img :src="item.path" alt="">
+                                                </div>
+                                            </template>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <div class="col-12 mb-3 text-center">
                                 <button type="submit" class="btn btn-primary">Envoyer</button>
                             </div>

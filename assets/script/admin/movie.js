@@ -1,13 +1,16 @@
 import Alpine from 'alpinejs';
 
-import {fetchGet, getToken} from '../service/Httpservice.js';
+import {fetchDelete, fetchGet, getToken} from '../service/Httpservice.js';
 import Pagination from 'tui-pagination';
-import { sortArray, resetDateToInputDate } from '../service/UtilService.js';
+import { sortArray, resetDateToInputDate, wait, readFile, loader } from '../service/UtilService.js';
 import { Modal } from 'bootstrap';
 import { Movie } from './models.js';
 import validate from 'validate.js';
 import {store} from '../store/store.js';
-import { fetchGetMovies, sortMovies, fetchAddMovie, fetchUpdateMovie, fetchDeleteMovie } from '../store/movie.slice.js';
+import { fetchGetMovies, sortMovies, fetchAddMovie, fetchUpdateMovie, fetchDeleteMovie, deleteMoviePhoto } from '../store/movie.slice.js';
+import env from '../env.js';
+import toastr from 'toastr'
+toastr.options = env.toastrOptions;
  
 window.Alpine = Alpine
 document.addEventListener('alpine:init', () => {
@@ -23,6 +26,9 @@ document.addEventListener('alpine:init', () => {
         errors: undefined,
         // file:null,
         // filePath:null,
+        newPhotos: [],
+        tasks: [],
+        currentTasks: 0,
         async init() {
             this.modal = new Modal('#exampleModal', {
                 keyboard: false
@@ -82,6 +88,9 @@ document.addEventListener('alpine:init', () => {
                 return;
             } 
 
+            this.newPhotos = [];
+            this.tasks = [];
+            this.currentTasks = 0;
             if (action === 1) {
                 this.movieM = new Movie();
                 if (key !== null) {
@@ -98,6 +107,67 @@ document.addEventListener('alpine:init', () => {
             } else {
                 let index = this.movieM['actors'].indexOf(id);
                 this.movieM['actors'].splice(index, 1);
+            }
+        },
+        async handleInputFile(e) {
+            let file = e.target.files.item(0);
+            if (file.type.includes('image')) {
+                let path = await readFile(file);
+                this.newPhotos.push({
+                    file: file,
+                    path: path
+                });
+            }
+        },
+        async savePhotos() {
+            const token = await getToken();
+            for (let index in this.newPhotos) {
+                this.tasks.push({
+                    request: () => {
+                        let form = new FormData();
+                        form.append('invoiceFile', this.newPhotos[index]['file']);
+                        fetch('/api/movie_media_objects', {
+                            method: 'POST',
+                            headers: {
+                                'X-Requested-With': 'XMLHttpRequest',
+                                'Authorization': `Bearer ${token}`,
+                            },
+                            body: form
+                        })
+                        .then(response => response.json())
+                        .then(json => {
+                            this.currentTasks--;
+                            this.treatTasks();
+                            this.movieM['photos'] = [...this.movieM['photos'], json];
+                            if (this.tasks.length === 0) {
+                                this.newPhotos = [];
+                            }
+                        });
+                    },
+                    index: index
+                });
+            }
+            loader(true);
+            this.treatTasks();
+        },
+        treatTasks() {
+            while(true) {
+                if (this.tasks.length === 0 || this.currentTasks > 4)break;
+                this.tasks.shift().request();
+                this.currentTasks++;
+            }
+            if (this.tasks.length === 0)loader(false);
+        },
+        async deletePhoto(index, isNew = true) {
+            if (isNew) {
+                this.newPhotos.splice(index, 1);
+            } else {
+                let id = this.movieM['photos'][index]['id'];
+                const token = await getToken();
+                await fetchDelete('/api/movie_media_objects/' + id, token);
+                this.movieM['photos'] = this.movieM['photos'].filter(item => item.id !== id);
+                store.dispatch(deleteMoviePhoto({movieIndex:this.elmIndex, photoIndex: index}));
+                toastr.success('Supprimer une photo', 'Enregistré');
             }
         },
         checkForm(form) {
@@ -136,6 +206,8 @@ document.addEventListener('alpine:init', () => {
                 movie['actors'] = [];
                 movie['last'] = parseInt(movie['last']);
                 this.movieM["actors"].forEach(id => movie['actors'].push('/api/actresses/' + id));
+                movie["photos"] = [];
+                this.movieM["photos"].forEach(photo => movie["photos"].push(photo["@id"]));
 
                 if (this.elmIndex === null) {
                     store.dispatch(fetchAddMovie({movie: movie}));

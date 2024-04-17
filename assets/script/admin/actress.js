@@ -112,6 +112,7 @@ document.addEventListener('alpine:init', () => {
                 let formData = new FormData();
                 let response;
                 for(let index in this.actressM)formData.append(index, this.actressM[index]);
+                if (this.file !== null)formData.append('invoiceFile', this.file);
                 let token = await getToken();
                 if(this.elmIndex === null) {
                     if(this.file !== null)this.actressM.setPhoto(this.file);

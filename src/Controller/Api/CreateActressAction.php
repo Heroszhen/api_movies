@@ -3,6 +3,7 @@
 namespace App\Controller\Api;
 
 use App\Entity\Actress;
+use App\Service\UtilService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Attribute\AsController;
@@ -11,6 +12,9 @@ use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 #[AsController]
 final class CreateActressAction extends AbstractController
 {
+    public function __construct(private UtilService $utilService)
+    {}
+
     public function __invoke(Request $request): Actress
     {
         $uploadedFile = $request->files->get('invoiceFile');
@@ -23,11 +27,11 @@ final class CreateActressAction extends AbstractController
 
         $post = $request->request;
         $actress
-            ->setName($post->get('name'))
-            ->setCountry($post->get('country'))
-            ->setDescription($post->get('description'))
+            ->setName($this->utilService->setNull($post->get('name')))
+            ->setCountry($this->utilService->setNull($post->get('country')))
+            ->setDescription($this->utilService->setNull($post->get('description')))
         ;
-        if (!in_array($post->get('birthday'), [null, ''])) {
+        if (!in_array($this->utilService->setNull($post->get('birthday')), [null, ''])) {
             $actress->setBirthday(new \DateTime($post->get('birthday')));
         }
 

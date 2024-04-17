@@ -259,8 +259,21 @@ $h1:2.25rem;
         padding: .375rem .75rem;
         border: 1px solid #dee2e6;
         border-radius: 5px;
-        max-height: 100px;
+        max-height: 200px;
         overflow-y: auto;
+     }
+     .new-photo {
+        position: relative;
+        .bi-x-circle {
+          position: absolute;
+          z-index: 10;
+          right: -5px;
+          top: -10px;
+          &:hover {
+            cursor: pointer;
+            color: red;
+          }
+        }
      }
   }
 }
