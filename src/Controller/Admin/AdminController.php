@@ -20,4 +20,10 @@ class AdminController extends AbstractController
     {
         return $this->render('admin/admin/movies.html.twig');
     }
+
+    #[Route('/photos', name: 'admin_photos')]
+    public function getAllPhotos(): Response
+    {
+        return $this->render('admin/admin/photos.html.twig');
+    }
 }
