@@ -68,6 +68,9 @@
                                 <td x-text="item.last"></td>
                                 <td x-text="item.released"></td>
                                 <td>
+                                    <template x-if="item.photos.length > 0">
+                                        <img :src="'/files/' + item.photos[0]['name']" alt="">
+                                    </template>
                                 </td>
                                 <td>
                                     <button type="button" class="btn btn-info mb-2 me-2" @click="switchModal(1, index)">Modifier</button>
