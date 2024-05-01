@@ -20,3 +20,9 @@ php bin/console importmap:require tui-pagination/dist/tui-pagination.min.css
 npm install uglify-js -g
 
 php bin/console sass:build --watch
+
+
+---Vue.js
+php bin/console importmap:require vue@3.4.23
+ou
+php bin/console importmap:require vue/dist/vue.global.js (utilisé dans le projet)

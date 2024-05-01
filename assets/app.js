@@ -15,7 +15,6 @@ import 'bootstrap';
 import $ from 'jquery';
 import 'tui-pagination/dist/tui-pagination.min.css';
 
-
 if ($('#admin-home').length >= 1) {
     import('./script/socket.js'); 
 }

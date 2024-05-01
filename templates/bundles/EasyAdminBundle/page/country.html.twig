@@ -11,40 +11,44 @@
     }
 </style>
 
-<table class="table datagrid">
-    <thead>
-        <tr>
-            <th>Name</th>
-            <th>Capital</th>
-            <th>Languages</th>
-            <th>population</th>
-            <th>Flag</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-    {% for key, country in countries|sort((a, b) => a['name']['official'] <=> b['name']['official']) %}
-        <tr>
-            <td>{{ country['name']['official'] }}</td>
-            <td>
-                {% if country['capital'] is defined %}
-                    {{ country['capital'][0] }}
-                {% endif %}
-            </td>
-            <td>
-                {% if country['languages'] is defined %}
-                    {% for lang in country['languages'] %}
-                        <div>{{ lang }}</div>
-                    {% endfor %}
-                {% endif %}
-            </td>
-            <td>{{ country['population'] }}</td>
-            <td>
-                <img src="{{ country['flags']['png'] }}" alt="">
-            </td>
-            <td></td>
-        </tr>
-    {% endfor %}
-    </tbody>
-</table>
+<section id="easy-admin-countries">
+    <table class="table datagrid">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Capital</th>
+                <th>Languages</th>
+                <th>population</th>
+                <th>Flag</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for key, country in countries|sort((a, b) => a['name']['official'] <=> b['name']['official']) %}
+            <tr>
+                <td>{{ country['name']['official'] }}</td>
+                <td>
+                    {% if country['capital'] is defined %}
+                        {{ country['capital'][0] }}
+                    {% endif %}
+                </td>
+                <td>
+                    {% if country['languages'] is defined %}
+                        {% for lang in country['languages'] %}
+                            <div>{{ lang }}</div>
+                        {% endfor %}
+                    {% endif %}
+                </td>
+                <td>{{ country['population'] }}</td>
+                <td>
+                    <img src="{{ country['flags']['png'] }}" alt="">
+                </td>
+                <td></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</section>
+
+<script src="{{ asset('script/easy_admin/countries.js') }}" ></script>
 {% endblock %}

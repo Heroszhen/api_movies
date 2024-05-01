@@ -3,7 +3,53 @@
 {% block title %}admin - photos{% endblock %}
 
 {% block body %}
+<style>
+    #form-identity > div:not(:nth-child(3)) {
+        width: 210px;
+    }
+    #form-identity button {
+        position: fixed;
+        top: 350px;
+        left: 15px;
+    }
+    iframe {
+        width: 100%;
+        height: 700px;
+    }
+</style>
 <section class="admin-section" id="admin-photos">
+    {% verbatim %}
+    <div id="app">
+        <h2 class="mb-5">{{ message }} </h2>
+        <section v-show="form" id="section-form">
+            <h5>Qui est-ce qui est Zhen ?</h5>
+            <form @submit.prevent="submit" id="form-identity">
+                <div class="form-check pb-3" @mouseover="moveDiv('div_handsome')" ref="divHandsome">
+                    <input class="form-check-input" type="radio" name="radio-identity" id="radio-handsome" value="handsome" v-model="identity">
+                    <label class="form-check-label" for="radio-handsome">Un beau gosse</label>
+                </div>
+                <div class="form-check pb-3" @mouseover="moveDiv('div_chinese')" ref="divChinese">
+                    <input class="form-check-input" type="radio" name="radio-identity" id="radio-chinese" value="chinese" v-model="identity">
+                    <label class="form-check-label" for="radio-chinese">Un chinois</label>
+                </div>
+                <div class="form-check pb-3">
+                    <input class="form-check-input" type="radio" name="radio-identity" id="radio-hero" value="hero" v-model="identity">
+                    <label class="form-check-label" for="radio-hero">Le plus grand héros du monde</label>
+                </div>
+                <button type="submit" class="btn btn-primary btn-sm">Submit</button>
+            </form>
+        </section>
+
+        <section v-if="!form" id="section-code">
+            <iframe src='https://s3.eu-west-3.amazonaws.com/learnfrontend.yangzhen.fr/js_multiple_points.html'></iframe>
+        </section>
+
+        <section id="section-photos">
+        </section>
+        
+    </div>
+    {% endverbatim %}
 </section>
 
+ {{ importmap(['app', 'admin_photos']) }}
 {% endblock %}

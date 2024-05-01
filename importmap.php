@@ -26,6 +26,10 @@ return [
         'path' => './assets/script/admin/movie.js',
         'entrypoint' => true,
     ],
+    'admin_photos' => [
+        'path' => './assets/script/admin/photos.js',
+        'entrypoint' => true,
+    ],
     'test_users' => [
         'path' => './assets/script/test/users.js',
         'entrypoint' => true,
@@ -80,5 +84,8 @@ return [
     ],
     'redux-thunk' => [
         'version' => '3.1.0',
+    ],
+    'vue/dist/vue.esm-browser.js' => [
+        'version' => '3.4.24',
     ],
 ];
