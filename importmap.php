@@ -88,4 +88,28 @@ return [
     'vue/dist/vue.esm-browser.js' => [
         'version' => '3.4.24',
     ],
+    'pinia' => [
+        'version' => '2.1.7',
+    ],
+    'vue-demi' => [
+        'version' => '0.14.6',
+    ],
+    '@vue/devtools-api' => [
+        'version' => '6.5.1',
+    ],
+    'vue' => [
+        'version' => '3.4.15',
+    ],
+    '@vue/runtime-dom' => [
+        'version' => '3.4.15',
+    ],
+    '@vue/runtime-core' => [
+        'version' => '3.4.15',
+    ],
+    '@vue/shared' => [
+        'version' => '3.4.15',
+    ],
+    '@vue/reactivity' => [
+        'version' => '3.4.15',
+    ],
 ];

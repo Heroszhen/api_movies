@@ -26,3 +26,6 @@ php bin/console sass:build --watch
 php bin/console importmap:require vue@3.4.23
 ou
 php bin/console importmap:require vue/dist/vue.global.js (utilisé dans le projet)
+
+---Pinia 
+pinia, vue-demi, @vue/devtools-api, vue, @vue/runtime-dom, @vue/runtime-core, @vue/shared, @vue/reactivity

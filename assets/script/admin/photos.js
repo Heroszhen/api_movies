@@ -1,20 +1,26 @@
-// import 'vue/dist/vue.global.js';
-import { createApp, ref, nextTick, onMounted, reactive } from 'vue/dist/vue.esm-browser.js';
+import { createApp, ref, nextTick, onMounted, reactive, computed, watch } from 'vue/dist/vue.esm-browser.js';
 import { getToken, fetchGet } from '../service/HttpService.js';
+import { createPinia, storeToRefs } from 'pinia';
+import { usePhotoStore } from '../store/pinia.photo.js';
 
-createApp({
+const app = createApp({
   setup() {
     const message = ref('Hello vue 3!');
     let identity = ref(null);
     let divHandsome = ref();
     let divChinese = ref();
     let form = ref(true);
-    let photos = reactive([]);
+    let photos2 = reactive([]);
+    let photoStore = usePhotoStore();
+    const { photos } = storeToRefs(photoStore);
+ 
 
     onMounted(async () => {
       const token = await getToken();
       let response = await fetchGet('/api/movie_media_objects', token);
-      Object.assign(photos, response['hydra:member']);
+      Object.assign(photos2, response['hydra:member']);
+      
+       photoStore.fetchPhotos();
     })
 
     async function moveDiv(str) {
@@ -40,11 +46,12 @@ createApp({
         form.value = false;
         window.setTimeout(() => {
           document.querySelector('iframe').remove();
-        }, 10000);
+        }, 7000);
       }
     }
     
-    return {message, identity, submit, moveDiv, divHandsome, divChinese, form}
+    return {message, identity, submit, moveDiv, divHandsome, divChinese, form, photoStore, photos, photos2}
   }
-}).mount('#app')
-
+});
+app.use(createPinia());
+app.mount('#app');
