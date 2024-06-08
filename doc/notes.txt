@@ -29,3 +29,8 @@ php bin/console importmap:require vue/dist/vue.global.js (utilisé dans le proje
 
 ---Pinia 
 pinia, vue-demi, @vue/devtools-api, vue, @vue/runtime-dom, @vue/runtime-core, @vue/shared, @vue/reactivity
+
+
+---symfony/rate-limiter
+https://symfony.com/doc/current/security.html#limiting-login-attempts
+https://www.udfn.fr/article/mettre-en-place-du-rate-limit-grace-au-composant-symfony-ratelimiter.html

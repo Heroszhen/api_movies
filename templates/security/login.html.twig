@@ -23,8 +23,10 @@
                     <div>Se souvenir de moi</div>
                 </div>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                {# {{ dump(error, error.messageData, error.messageKey) }} #}
                 {% if error %}
-                    <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {# <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div> #}
+                    <div class="alert alert-danger">{{ error.messageKey|trans }}</div>
                 {% endif %}
                 <button type="submit" class="btn mt-3">Login</button>
             </form>

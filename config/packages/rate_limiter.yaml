@@ -1,0 +1,17 @@
+framework:
+    # rate_limiter:
+    #     anonymous_api:
+    #         # use 'sliding_window' if you prefer that policy
+    #         policy: 'fixed_window'
+    #         limit: 3
+    #         interval: '10 seconds'
+    #     authenticated_api:
+    #         policy: 'token_bucket'
+    #         limit: 3
+    #         rate: { interval: '10 seconds', amount: 10 }
+    
+    # rate_limiter:
+    #     main:
+    #         policy: 'fixed_window'
+    #         limit: 100
+    #         interval: '60 minutes'
