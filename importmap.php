@@ -112,4 +112,10 @@ return [
     '@vue/reactivity' => [
         'version' => '3.4.15',
     ],
+    'chart.js' => [
+        'version' => '4.4.3',
+    ],
+    '@kurkle/color' => [
+        'version' => '0.3.2',
+    ],
 ];

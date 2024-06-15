@@ -15,6 +15,10 @@ import 'bootstrap';
 import $ from 'jquery';
 import 'tui-pagination/dist/tui-pagination.min.css';
 
-if ($('#admin-home').length >= 1) {
+if ($('#admin-home').length > 0) {
     import('./script/socket.js'); 
+}
+
+if ($('#test-chartjs').length) {
+    import('./script/test/chartjs.js'); 
 }

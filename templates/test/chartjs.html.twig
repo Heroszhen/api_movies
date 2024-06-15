@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Chart.js!{% endblock %}
+
+{% block body %}
+<style>
+    canvas {
+        margin-bottom: 70px;
+        width:95%;
+        max-height:300px;
+    }
+</style>
+
+<section id="test-chartjs" class="p-4">
+    <h1 class="text-center mb-5">Chart.js</h1>
+
+    <h3>Bar</h3>
+    <canvas id="chart-bar"></canvas>
+
+    <h3>Area</h3>
+    <canvas id="chart-area"></canvas>
+</section>
+
+{% endblock %}
