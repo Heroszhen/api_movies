@@ -32,4 +32,10 @@ class TestController extends AbstractController
     {
         return $this->render('test/chartjs.html.twig');
     }
+
+    #[Route('/users-petitevue', name: 'test_users_petitvue')]
+    public function petitevue(): Response
+    {
+        return $this->render('test/petitevue.html.twig');
+    }
 }
