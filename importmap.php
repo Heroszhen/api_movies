@@ -118,4 +118,7 @@ return [
     '@kurkle/color' => [
         'version' => '0.3.2',
     ],
+    'petite-vue' => [
+        'version' => '0.4.1',
+    ],
 ];
