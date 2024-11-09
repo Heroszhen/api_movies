@@ -38,4 +38,10 @@ class TestController extends AbstractController
     {
         return $this->render('test/petitevue.html.twig');
     }
+
+    #[Route('/users-react', name: 'test_users_react')]
+    public function react(): Response
+    {
+        return $this->render('test/users_react.html.twig');
+    }
 }
