@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}unocss rules!{% endblock %}
+
+{% block body %}
+<style>
+</style>
+
+<section id="test-unocess-rules" class="p-4">
+    <h1 class="text-center mb-5">UnoCss Rules</h1>
+
+    <section class="container">
+        <div class="row">
+            {% for key, country in countries %}
+                <div class="col-md-4 col-lg-3 m-bottom-30">
+                    <div class="z-card">
+                        <div class="z-image">
+                            <img src="{{ country.flags.png }}" alt="">
+                        </div>
+                        <div class="p-10">
+                            <div class="text-20 color-blue">{{ country.name.official }}</div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </section>
+</section>
+
+{% endblock %}
