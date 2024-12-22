@@ -277,3 +277,13 @@ $h1:2.25rem;
      }
   }
 }
+
+div[id^="man_girlFriends_"] {
+  margin-bottom:1.5rem !important;
+  padding: 10px;
+  border: 1px solid green;
+  border-radius: 10px;
+  >div {
+    margin-bottom:1rem !important;
+  }
+}

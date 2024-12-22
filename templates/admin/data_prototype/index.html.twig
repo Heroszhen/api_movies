@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin - data-prototype{% endblock %}
+
+{% block body %}
+<section class="admin-section" id="admin-mecs">
+    <h1 class="admin-title text-center">
+        Mecs
+        <a href="{{ path('admin_data_prototype_edit_man') }}">
+            <i class="bi bi-plus-circle pointer"></i>
+        </a>
+    </h1>
+    <div class="container">
+        <table class="table">
+            <thead class="table-dark">
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">Nom</th>
+                    <th scope="col">Taille</th>
+                    <th scope="col">Profession</th>
+                    <th scope="col">Copines</th>
+                    <th scope="col">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for man in men %}
+                <tr>
+                    <td>{{man.id}}</td>
+                    <td>{{man.name}}</td>
+                    <td>{{man.height}}</td>
+                    <td>{{man.job}}</td>
+                    <td>
+                        <div class="dropdown">
+                            <button class="btn btn-secondary dropdown-toggle btn-sm" type="button" data-bs-toggle="dropdown" aria-expanded="false"></button>
+                            <ul class="dropdown-menu">
+                                {% for girl in man.girlFriends %}
+                                    <li><a class="dropdown-item" href="#">{{ girl.name }}</a></li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    </td>
+                    <td>
+                        <a href="{{ path('admin_data_prototype_edit_man', {'id': man.id}) }}" class="btn btn-info btn-sm text-white">Modifier</a>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+{% endblock %}

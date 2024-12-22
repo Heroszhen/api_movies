@@ -1,0 +1,118 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}admin - data-prototype{% endblock %}
+
+{% block body %}
+<section class="admin-section section-data-prototype" id="admin-mecs">
+    <h1 class="admin-title text-center">Editer un mec</h1>
+    <div class="container">
+        {{ form_start(form, { 'attr': {'novalidate': 'novalidate'}}) }}
+            <div class="mb-3">
+                {{ form_label(form.name, 'Nom') }}
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">
+                    {% for error in form.name.vars.errors %}
+                        {{ error.message }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.height, 'Taille') }}
+                {{ form_widget(form.height, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">
+                    {% for error in form.height.vars.errors %}
+                        {{ error.message }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.age, 'Age') }}
+                {{ form_widget(form.age, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">
+                    {% for error in form.age.vars.errors %}
+                        {{ error.message }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3">
+                {{ form_label(form.job, 'Profession') }}
+                {{ form_widget(form.job, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">
+                    {% for error in form.job.vars.errors %}
+                        {{ error.message }}<br>
+                    {% endfor %}
+                </div>
+            </div>
+            <h3 class="mt-4">
+                Copines
+                <i class="bi bi-plus-circle pointer" id="add-girl"></i>
+            </h3>
+            {# <div id="girlFriends">
+                {% for girlField in form.girlFriends %}
+                    <div class="mb-3">
+                        {{ form_label(girlField.name, 'Nom') }}
+                        {{ form_widget(girlField.name, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {% for error in girlField.name.vars.errors %}
+                                {{ error.message }}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(girlField.height, 'Taille') }}
+                        {{ form_widget(girlField.height, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {% for error in girlField.height.vars.errors %}
+                                {{ error.message }}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(girlField.age, 'Age') }}
+                        {{ form_widget(girlField.age, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {% for error in girlField.age.vars.errors %}
+                                {{ error.message }}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(girlField.job, 'Profession') }}
+                        {{ form_widget(girlField.job, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {% for error in girlField.job.vars.errors %}
+                                {{ error.message }}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(girlField.cup, 'Profession') }}
+                        {{ form_widget(girlField.cup, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {% for error in girlField.cup.vars.errors %}
+                                {{ error.message }}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_label(girlField.type, 'Profession') }}
+                        {{ form_widget(girlField.type, {'attr': {'class': 'form-control'}}) }}
+                        <div class="text-danger">
+                            {% for error in girlField.type.vars.errors %}
+                                {{ error.message }}<br>
+                            {% endfor %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div> #}
+            <div id="girlFriends" class="mt-3">
+                {{ form_row(form.girlFriends) }}
+            </div>
+            
+            <div>
+                <button type="submit" class="btn btn-primary">Envoyer</button>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</section>
+{% endblock %}

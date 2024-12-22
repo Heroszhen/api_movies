@@ -22,3 +22,8 @@ if ($('#admin-home').length > 0) {
 if ($('#test-chartjs').length) {
     import('./script/test/chartjs.js'); 
 }
+
+if ($('.section-data-prototype').length) {
+    import('./script/data_prototype.js'); 
+}
+
