@@ -22,3 +22,7 @@ if ($('#admin-home').length > 0) {
 if ($('#test-chartjs').length) {
     import('./script/test/chartjs.js'); 
 }
+
+if ($('#milleret-registration').length) {
+    import('./script/test/milleret_registration.js'); 
+}
